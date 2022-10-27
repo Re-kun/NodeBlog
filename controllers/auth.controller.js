@@ -21,8 +21,9 @@ export const register = async (req, res) => {
             return res.redirect("/register");
         };
 
-        const user = Users.findOne({ where: {email: email} });
+        const user = await Users.findOne({ where: {email: email} });
         if (user) {
+            console.log(user)
            return res.redirect("/register");
         };
 
@@ -31,11 +32,12 @@ export const register = async (req, res) => {
         const newUser = {
             name: name,
             email: email,
-            password: password
+            password: password,
+            role: "user"
         };
 
         await Users.create(newUser);
-        res.redirect("/");
+        res.redirect("/login");
     }
     catch (error) {
         console.log(error.message);

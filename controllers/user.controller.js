@@ -19,9 +19,9 @@ export const createUser = (req, res) => {
 
 export const storeUser = async (req, res) => {
     try {
-        const { name, email,  password, confirmPassword } = req.body;
+        const { name, email,  password, confirmPassword, role } = req.body;
 
-        if (!name || !email || !password || !confirmPassword) {
+        if (!name || !email || !password || !confirmPassword || !role) {
            return res.redirect("/user/create");
         };
 
@@ -32,7 +32,8 @@ export const storeUser = async (req, res) => {
         const newUser = {
             name: name,
             email: email,
-            password: password
+            password: password,
+            role: 'user'
         };
 
         await Users.create(newUser);
@@ -47,7 +48,7 @@ export const storeUser = async (req, res) => {
 export const editUser = async (req, res) => {
     try {
         const id = req.params.id;
-        const user = await Users.findOne({ where: {id: id}, attributes: ['id', 'name', 'email'] });
+        const user = await Users.findOne({ where: {id: id}, attributes: ['id', 'name', 'email', 'role'] });
     
         res.render("user/user.edit.ejs", {
             data: user
@@ -61,13 +62,12 @@ export const editUser = async (req, res) => {
 export const updateUser = async (req, res) => {
     try {   
         const id = req.params.id;
-        const { name, email } = req.body;
-
-        console.log(name, email)
+        const { name, email, role } = req.body;
 
         const newUser = {
             name: name,
-            email: email
+            email: email,
+            role: role
         };
 
         const result = await Users.update(newUser,{
@@ -98,3 +98,12 @@ export const deleteUser = async (req, res) => {
     };
 };
 
+// export const tes = async (req, res) => {
+//     try {
+//         const data = '';
+//         res.send(data);
+//     }
+//     catch(error) {
+//         console.log(error.message);
+//     }
+// }

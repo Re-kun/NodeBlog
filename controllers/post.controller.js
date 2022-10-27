@@ -3,7 +3,7 @@ import Posts from "../models/post.model.js";
 // get
 export const index = async (req, res) => {
     try{
-        const posts = await Posts.findAll({ attributes: ["id", "title", "slug", "body"] });
+        const posts = await Posts.findAll({ attributes: ["id", "title", "slug", "body", "userId", "categoryId"] });
         res.render("blog/index", {
             posts: posts
         });
@@ -45,25 +45,26 @@ export const createPost =  (req, res) => {
 
 export const storePost = async (req, res) => {
     try{
-        const { title, slug, body } = req.body;
+        const { title, slug, body, userId, categoryId } = req.body;
 
-        if(!title || !slug || !body){
+        if(!title || !slug || !body || !userId || !categoryId){
             return res.redirect("/post/create")
-        }
+        };
         
         const post = {
             title: title,
             slug: slug,
-            body: body
-        }
+            body: body,
+            userId: userId,
+            categoryId: categoryId
+        };
         await Posts.create(post);
-        res.redirect("/post")
+        res.redirect("/post");
     }
     catch (error){
         console.Console.log(error.message);
-    }
-    
-}
+    };  
+};
 
 // delete
 export const deletePost = async (req, res) => {
@@ -80,7 +81,7 @@ export const deletePost = async (req, res) => {
 export const editPost = async (req, res) => {
     try{
         const id = req.params.id;
-        const post = await Posts.findOne({ where: {id: id}, attributes: ["id", "title", "slug", "body"] });
+        const post = await Posts.findOne({ where: {id: id}, attributes: ["id", "title", "slug", "body", "userId", "categoryId"] });
     
         res.render("blog/post.edit.ejs", {
             data: post
@@ -94,16 +95,18 @@ export const editPost = async (req, res) => {
 export const updatePost = async (req, res) => {
     try{
         const id = req.params.id;
-        const { title, slug, body } = req.body;
+        const { title, slug, body, userId, categoryId } = req.body;
 
-        if( !title || !slug || !body ) {
+        if( !title || !slug || !body || userId || categoryId ) {
           return res.redirect("/post/update/" + id);
         };
 
         const post = {
             title: title,
             slug: slug,
-            body: body
+            body: body,
+            userId: userId,
+            categoryId: categoryId
         };
 
         await Posts.update(post, {

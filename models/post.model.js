@@ -1,4 +1,5 @@
 import Users from "./user.model.js";
+import Categories from "./category.model.js";
 import { Sequelize } from "sequelize";
 import db from "./index.js";
 
@@ -20,4 +21,6 @@ const Posts = db.define("posts", {
 Users.hasMany(Posts);
 Posts.belongsTo(Users);
 
+Categories.hasMany(Posts);
+Posts.belongsTo(Categories);
 export default Posts;

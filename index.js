@@ -30,8 +30,8 @@ app.use(cookieParser());
 // db sync
 try {
     await db.authenticate();
-    // await Users.sync();
-    // await Categories.sync();
+    await Users.sync();
+    await Categories.sync();
     await Posts.sync();
     console.log("database connected")
 }catch (err) {
