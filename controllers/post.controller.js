@@ -62,7 +62,7 @@ export const storePost = async (req, res) => {
         res.redirect("/post");
     }
     catch (error){
-        console.Console.log(error.message);
+        console.log(error.message);
     };  
 };
 
