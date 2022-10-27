@@ -76,3 +76,20 @@ export const login = async (req, res) => {
         console.log(error.message);
     };
 };
+
+export const logout = async (req, res) => {
+    try {
+        // validate
+        const token = req.cookies["token"];
+
+        if(!token){
+            res.redirect("/login");
+        };
+
+        res.clearCookie("token");
+
+    }
+    catch (error) {
+        console.log(error.message);
+    }
+}

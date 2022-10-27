@@ -588,20 +588,20 @@ video {
   bottom: auto;
 }
 
-.top-\[60px\] {
-  top: 60px;
-}
-
-.left-\[-20rem\] {
-  left: -20rem;
-}
-
 .right-\[3\.5rem\] {
   right: 3.5rem;
 }
 
 .bottom-\[-4rem\] {
   bottom: -4rem;
+}
+
+.left-\[-20rem\] {
+  left: -20rem;
+}
+
+.top-\[60px\] {
+  top: 60px;
 }
 
 .top-\[-400px\] {

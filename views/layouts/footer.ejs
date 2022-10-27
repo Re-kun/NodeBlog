@@ -31,7 +31,25 @@
 
     </div>
 </footer>
-
+<span class="top-[60px] opacity-100 left-[-20rem] "></span>
 <script src="/js/script.js"></script>
+<script>
+    function navBar(){
+	let list = document.querySelector('.nav-item-groups');
+	list.classList.toggle('top-[60px]')
+	list.classList.toggle('opacity-100')
+	document.querySelector("body").classList.toggle("overflow-hidden");
+}
+
+function adminSidebar(){
+	console.log("y")
+	const sidebar= document.querySelector(".admin-sidebar");
+	if(sidebar.classList.contains("left-[-20rem]")){
+		sidebar.classList.remove("left-[-20rem]")
+	}else{
+		sidebar.classList.add("left-[-20rem]")
+	}
+}
+</script>
 </body>
 </html>
