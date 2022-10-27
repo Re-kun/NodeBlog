@@ -1,6 +1,7 @@
 // package
 import express from "express";
 import cookieParser from "cookie-parser";
+import path from "path";
 // models
 import db from "./models/index.js";
 import Users from "./models/user.model.js";
@@ -15,6 +16,7 @@ import CategoryRouter from "./routes/category.route.js";
 const app = express();
 
 // setup module
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(express.static("public"));
 app.use(express.json());
@@ -41,6 +43,7 @@ app.use(CategoryRouter);
 app.get("/", (req, res) => {
     res.render("index");
 });
+
 
 // Starting server
 const PORT = process.env.PORT || 3000;
