@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Tailwind Starter Template - Minimal Blog: Tailwind Toolbox</title>
+    <meta name="author" content="Re" />
+    <meta name="description" content="This is blogging system website" />
+	<link rel="stylesheet" href="css/style.css">
+  </head>
+  <body class="font-sans leading-normal tracking-normal bg-gray-100">
+
+	<!-- container -->
+	<main class="px-7 sm:px-10 md:px-28 lg:px-32">
+
+        <section class="h-screen ">
+            <div class="container h-full px-6 py-12 mx-auto ">
+              <div class="flex flex-wrap items-center justify-center h-full text-gray-800 g-6">
+                <div class="md:w-8/12 lg:w-5/12 lg:ml-20 ">
+                  <h1 class="mb-20 text-3xl text-center">Sign Up</h1>
+                  <form action="/register" method="post">
+
+                    <!-- Username input -->
+                    <div class="mb-6">
+                        <input
+                          type="text"
+                          class="block w-full px-4 py-2 m-0 text-xl font-normal text-gray-700 transition ease-in-out bg-white border border-gray-300 border-solid rounded form-control bg-clip-padding focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                          placeholder="Username"
+                          name="name"
+                        />
+                      </div>
+
+                    <!-- Email input -->
+                    <div class="mb-6">
+                      <input
+                        type="text"
+                        class="block w-full px-4 py-2 m-0 text-xl font-normal text-gray-700 transition ease-in-out bg-white border border-gray-300 border-solid rounded form-control bg-clip-padding focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                        placeholder="Email address"
+                        name="email"
+                      />
+                    </div>
+          
+                    <!-- Password input -->
+                    <div class="mb-6">
+                      <input
+                        type="password"
+                        class="block w-full px-4 py-2 m-0 text-xl font-normal text-gray-700 transition ease-in-out bg-white border border-gray-300 border-solid rounded form-control bg-clip-padding focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                        placeholder="Password"
+                        name="password"
+                      />
+                    </div>
+
+                    <!-- Confirm Password input -->
+                    <div class="mb-6">
+                        <input
+                          type="password"
+                          class="block w-full px-4 py-2 m-0 text-xl font-normal text-gray-700 transition ease-in-out bg-white border border-gray-300 border-solid rounded form-control bg-clip-padding focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                          placeholder="Confir Password"
+                          name="confirmPassword"
+                        />
+                    </div>              
+          
+                    <div class="flex items-center justify-between mb-6">
+                    <p
+                        href="/login"
+                        class="text-black"
+                        >Alredy have account?
+                    </p>
+                      <a
+                        href="/login"
+                        class="text-black transition duration-200 ease-in-out hover:text-blue-700 focus:text-blue-700 active:text-blue-800"
+                        >Sign In</a
+                      >
+                    </div>
+                    
+                    <!-- Submit button -->
+                    <button
+                      type="submit"
+                      class="inline-block w-full py-3 text-sm font-medium leading-snug text-white uppercase transition duration-150 ease-in-out bg-black rounded-lg shadow-md px-7 hover:bg-white hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 hover:text-black active:shadow-lg"
+                      data-mdb-ripple="true"
+                      data-mdb-ripple-color="light"
+                    >
+                      Sign Up
+                    </button>
+          
+                  </form>
+
+                </div>
+              </div>
+            </div>
+          </section>
+	</main>
+  <!-- endContainer -->
+
+	
+
+	<footer class="mt-64 bg-white border-t border-gray-400 shadow">
+		<div class="container flex max-w-4xl py-8 mx-auto">
+
+			<div class="flex flex-wrap w-full mx-auto">
+				<div class="flex w-full md:w-1/2 ">
+					<div class="px-8">
+						<h3 class="font-bold text-gray-900">About</h3>
+						<p class="py-4 text-sm text-gray-600">
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel mi ut felis tempus commodo nec id erat. Suspendisse consectetur dapibus velit ut lacinia.
+						</p>
+					</div>
+				</div>
+
+				<div class="flex w-full md:w-1/2">
+					<div class="px-8">
+						<h3 class="font-bold text-gray-900">Social</h3>
+						<ul class="items-center pt-3 text-sm list-reset">
+							<li>
+								<a class="inline-block py-1 text-gray-600 no-underline hover:text-gray-900 hover:text-underline" href="#">Add social link</a>
+							</li>
+							<li>
+								<a class="inline-block py-1 text-gray-600 no-underline hover:text-gray-900 hover:text-underline" href="#">Add social link</a>
+							</li>
+							<li>
+								<a class="inline-block py-1 text-gray-600 no-underline hover:text-gray-900 hover:text-underline" href="#">Add social link</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+  
+<script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<%- include("../layouts/header") %>
+
+	<!-- container -->
+	<main class="px-7 sm:px-10 md:px-28 lg:px-32">
+
+        <section class="h-screen ">
+            <div class="container h-full px-6 py-12 mx-auto ">
+              <div class="flex flex-wrap items-center justify-center h-full text-gray-800 g-6">
+                <div class="md:w-8/12 lg:w-5/12 lg:ml-20 ">
+                  <h1 class="mb-5 text-3xl ">Edit Post</h1>
+                  <form>
+
+                    <!-- title input -->
+                    <div class="mb-6">
+                      <input
+                        type="text"
+                        class="title-input block w-full px-4 py-2 m-0 text-xl font-normal border border-solid rounded form-control focus:text-slate-500 bg-slate-300 placeholder-slate-600 focus:outline-none"
+                        placeholder="title"
+                        name="title"
+                        value="<%= data.title %>"
+                        required
+                      />
+                    </div>
+
+                    <!-- slug input -->
+                    <div class="mb-6">
+                      <input
+                        type="text"
+                        class="slug-input block w-full px-4 py-2 m-0 text-xl font-normal border border-solid rounded form-control focus:text-slate-500 bg-slate-300 placeholder-slate-600 focus:outline-none"
+                        placeholder="slug"
+                        name="slug"
+                        value="<%= data.slug %>"
+                        required
+                      />
+                    </div>
+
+                    <!-- body input -->
+                    <div class="mb-6">
+                      <input
+                        type="text"
+                        class="body-input  block w-full px-4 py-2 m-0 text-xl font-normal border border-solid rounded form-control focus:text-slate-500 bg-slate-300 placeholder-slate-600 focus:outline-none"
+                        placeholder="body"
+                        name="body"
+                        value="<%= data.body%>"
+                        required
+                      />
+                    </div>
+
+                    <!-- Submit button -->
+                    <button
+                      type="button"
+                      class="inline-block w-full py-3 text-sm font-medium leading-snug text-white uppercase transition duration-150 ease-in-out bg-black rounded-lg shadow-md px-7 hover:bg-white hover:text-black hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg "
+                      data-mdb-ripple="true"
+                      data-mdb-ripple-color="light"
+                      onclick="updatePost( Number('<%= data.id %>') )"
+                    >
+                      Sign in
+                    </button>
+          
+                  </form>
+                </div>
+              </div>
+            </div>
+        </section>
+
+	</main>
+	<!-- endContainer -->
+
+    <script>
+        function updatePost (id) {
+            const title = document.querySelector(".title-input").value
+            const slug = document.querySelector(".slug-input ").value 
+            const body = document.querySelector(".body-input ").value 
+
+            const newPost = {
+                title: title,
+                slug: slug,
+                body: body
+            };
+
+            fetch(`http://localhost:3000/post/${id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type" : "application/json"
+                },
+                body: JSON.stringify(newPost)
+            }).then( result => console.log(result) ).catch( error => console.log(error.message) );
+            location.reload()
+        }
+        
+    </script>
+<%- include("../layouts/footer") %>
+
