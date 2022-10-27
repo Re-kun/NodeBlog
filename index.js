@@ -2,6 +2,10 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import path from "path";
+//config express
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+const __dirname = dirname(fileURLToPath(import.meta.url));
 // models
 import db from "./models/index.js";
 import Users from "./models/user.model.js";
@@ -18,7 +22,7 @@ const app = express();
 // setup module
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -43,7 +47,6 @@ app.use(CategoryRouter);
 app.get("/", (req, res) => {
     res.render("index");
 });
-
 
 // Starting server
 const PORT = process.env.PORT || 3000;
