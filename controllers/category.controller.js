@@ -9,8 +9,8 @@ export const indexCategory = async (req, res) => {
     }
     catch (error) {
         console.log(error.message);
-    }
-}
+    };
+};
 
 // create
 export const createCategory = (req, res) => {
@@ -22,8 +22,8 @@ export const storeCategory = async (req, res) => {
         const { name, slug } = req.body;
 
         if(!name || !slug){
-            res.redirect("/category/create")
-        }
+            res.redirect("/category/create");
+        };
 
         const newCategory = {
             name: name,
@@ -31,7 +31,7 @@ export const storeCategory = async (req, res) => {
         };
 
         await Categories.create(newCategory);
-        res.redirect("/dashboard/category")
+        res.redirect("/dashboard/category");
     }
     catch (error) {
         console.log(error.message);
@@ -68,16 +68,16 @@ export const updateCategory = async (req, res) => {
         });
 
         if(result == 1) {
-            console.log("berhasil")
-        }
+            console.log("berhasil");
+        };
 
         if(result == 0) {
-            console.log("ada yang salah ")
-        }
+            console.log("ada yang salah ");
+        };
     }
     catch (error) {
         console.log(error.message);
-    }
+    };
 };
 
 // delete
@@ -89,6 +89,6 @@ export const deleteCategory = async (req, res) => {
     }
     catch (error) {
         console.log(error.message);
-    }
-}
+    };
+};
 

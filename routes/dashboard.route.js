@@ -6,7 +6,6 @@ import { indexCategory, createCategory, storeCategory, editCategory, updateCateg
 import { validateToken } from '../middleware/validateToken.js';
 const router = express.Router();
 
-
 // user
 
 router.get("/dashboard/user", validateToken, indexUser);

@@ -1,5 +1,5 @@
 import express from "express";
-import { indexPost, detailPost } from "../controllers/post.controller.js"
+import { indexPost, detailPost } from "../controllers/post.controller.js";
 import { validateToken } from "../middleware/validateToken.js";
 
 const router = express.Router();

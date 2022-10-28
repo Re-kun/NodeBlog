@@ -40,8 +40,8 @@ export const register = async (req, res) => {
     }
     catch (error) {
         console.log(error.message);
-    }
-}
+    };
+};
 
 export const login = async (req, res) => {
     try {
@@ -92,5 +92,5 @@ export const logout = async (req, res) => {
     }
     catch (error) {
         console.log(error.message);
-    }
-}
+    };
+};
