@@ -10,10 +10,10 @@ export const signUp = (req, res) => {
 
 export const register = async (req, res) => {
     try {
-        const { name, email, password, confirmPassword } = req.body;
+        const { username, email, password, confirmPassword } = req.body;
 
         // validation
-        if ( !name || !email || !password || !confirmPassword ) {
+        if ( !username || !email || !password || !confirmPassword ) {
             return res.redirect("/register");
         };
         
@@ -23,14 +23,13 @@ export const register = async (req, res) => {
 
         const user = await Users.findOne({ where: {email: email} });
         if (user) {
-            console.log(user)
            return res.redirect("/register");
         };
 
         // insert to db
 
         const newUser = {
-            name: name,
+            username: username,
             email: email,
             password: password,
             role: "user"
