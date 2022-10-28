@@ -1,6 +1,6 @@
 import Categories from "../models/category.model.js";
 
-export const index = async (req, res) => {
+export const indexCategory = async (req, res) => {
     try {
         const categories = await Categories.findAll({ attributes: [ "id", "name", "slug"] });
         res.render("dashboard/category", {

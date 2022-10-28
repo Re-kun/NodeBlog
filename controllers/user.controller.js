@@ -1,6 +1,6 @@
 import Users from "../models/user.model.js";
 
-export const index = async (req, res) => {
+export const indexUser = async (req, res) => {
     try {
        const users = await Users.findAll();
        res.render("dashboard/user", {

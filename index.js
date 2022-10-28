@@ -12,10 +12,9 @@ import Users from "./models/user.model.js";
 import Posts from "./models/post.model.js";
 import Categories from "./models/category.model.js";
 // routes
-import UserRouter from "./routes/user.route.js";
-import PostRouter from "./routes/post.route.js";
+import IndexRouter from "./routes/index.route.js"
+import DashboardRouter from "./routes/dashboard.route.js"
 import AuthRouter from "./routes/auth.route.js";
-import CategoryRouter from "./routes/category.route.js";
 
 const app = express();
 
@@ -30,9 +29,9 @@ app.use(cookieParser());
 // db sync
 try {
     await db.authenticate();
-    await Users.sync();
-    await Categories.sync();
-    await Posts.sync();
+    // await Users.sync();
+    // await Categories.sync();
+    // await Posts.sync();
     console.log("database connected")
 }catch (err) {
     console.log(err.message);
@@ -40,9 +39,8 @@ try {
 
 // Route
 app.use(AuthRouter); 
-app.use(UserRouter);
-app.use(PostRouter);
-app.use(CategoryRouter);
+app.use(IndexRouter);
+app.use(DashboardRouter);
 
 app.get("/", (req, res) => {
     res.render("index");
