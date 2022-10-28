@@ -3,7 +3,7 @@ import db from "./index.js";
 
 const { DataTypes } = Sequelize;
 const Users = db.define("users", {
-    name: {
+    username: {
         type: DataTypes.STRING,
         allowNull: false
     },

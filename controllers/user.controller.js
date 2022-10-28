@@ -19,9 +19,9 @@ export const createUser = (req, res) => {
 
 export const storeUser = async (req, res) => {
     try {
-        const { name, email,  password, confirmPassword, role } = req.body;
+        const { username, email,  password, confirmPassword, role } = req.body;
 
-        if (!name || !email || !password || !confirmPassword || !role) {
+        if (!username || !email || !password || !confirmPassword || !role) {
            return res.redirect("/user/create");
         };
 
@@ -30,7 +30,7 @@ export const storeUser = async (req, res) => {
         };
 
         const newUser = {
-            name: name,
+            username: username,
             email: email,
             password: password,
             role: 'user'
@@ -48,7 +48,7 @@ export const storeUser = async (req, res) => {
 export const editUser = async (req, res) => {
     try {
         const id = req.params.id;
-        const user = await Users.findOne({ where: {id: id}, attributes: ['id', 'name', 'email', 'role'] });
+        const user = await Users.findOne({ where: {id: id}, attributes: ['id', 'username', 'email', 'role'] });
     
         res.render("user/user.edit.ejs", {
             data: user
@@ -62,10 +62,10 @@ export const editUser = async (req, res) => {
 export const updateUser = async (req, res) => {
     try {   
         const id = req.params.id;
-        const { name, email, role } = req.body;
+        const { username, email, role } = req.body;
 
         const newUser = {
-            name: name,
+            username: username,
             email: email,
             role: role
         };

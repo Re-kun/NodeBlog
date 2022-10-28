@@ -10,14 +10,14 @@
                   <h1 class="mb-5 text-3xl ">Update User</h1>
                   <form action="/user" method="post">
 
-                    <!-- name input -->
+                    <!-- username input -->
                     <div class="mb-6">
                       <input
                         type="text"
-                        class="name-input block w-full px-4 py-2 m-0 text-xl font-normal border border-solid rounded form-control focus:text-slate-500 bg-slate-300 placeholder-slate-600 focus:outline-none"
-                        placeholder="name"
-                        value="<%= data.name %>"
-                        name="name"
+                        class="username-input block w-full px-4 py-2 m-0 text-xl font-normal border border-solid rounded form-control focus:text-slate-500 bg-slate-300 placeholder-slate-600 focus:outline-none"
+                        placeholder="username"
+                        value="<%= data.username %>"
+                        name="username"
                         
                       />
                     </div>
@@ -65,11 +65,11 @@
   
   <script>
     function updateUser(id) {
-      let name = document.querySelector('.name-input').value;
+      let username = document.querySelector('.username-input').value;
       let email = document.querySelector(".email-input").value;
 
       const newData = {
-        name: name,
+        username: username,
         email: email,
       }
 
