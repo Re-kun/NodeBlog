@@ -15,7 +15,7 @@ export const indexUser = async (req, res) => {
 // create
 export const createUser = (req, res) => {
     res.render("user/user.create.ejs");
-}
+};
 
 export const storeUser = async (req, res) => {
     try {
@@ -26,7 +26,7 @@ export const storeUser = async (req, res) => {
         };
 
         if(password !== confirmPassword) {
-            return res.redirect("/user/create")
+            return res.redirect("/user/create");
         };
 
         const newUser = {
@@ -37,7 +37,7 @@ export const storeUser = async (req, res) => {
         };
 
         await Users.create(newUser);
-        res.redirect("/dashboard/user")
+        res.redirect("/dashboard/user");
     }
     catch (error) {
         console.log(error.message);
@@ -56,8 +56,8 @@ export const editUser = async (req, res) => {
     }
     catch (error) {
         console.log(error.message);
-    }
-}
+    };
+};
 
 export const updateUser = async (req, res) => {
     try {   
@@ -76,15 +76,15 @@ export const updateUser = async (req, res) => {
 
         if(result == 1) {
            return console.log("Berhasil")
-        }
+        };
 
         if(result == 0) {
             return console.log("ada yang salah");
-        }
+        };
     }
     catch (error) {
         console.log(error.message);
-    }
+    };
 }
 
 // delete 

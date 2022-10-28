@@ -1,12 +1,13 @@
 import express from "express";
-import { index, detailPost } from "../controllers/post.controller.js"
+import { indexPost, detailPost } from "../controllers/post.controller.js"
+import { validateToken } from "../middleware/validateToken.js";
 
 const router = express.Router();
-router.get("/", (req, res) => {
+router.get("/", validateToken, (req, res) => {
     res.render("index");
 });
 
-router.get("/posts", index);
-router.get("/post/:id", detailPost);
+router.get("/posts", validateToken, indexPost);
+router.get("/post/:id", validateToken, detailPost);
 
 export default router;

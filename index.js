@@ -39,8 +39,8 @@ try {
 
 // Route
 app.use(AuthRouter); 
-app.use(IndexRouter);
 app.use(DashboardRouter);
+app.use(IndexRouter);
 
 app.get("/", (req, res) => {
     res.render("index");

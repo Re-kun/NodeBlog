@@ -1,7 +1,7 @@
 import Posts from "../models/post.model.js";
 
 // get
-export const index = async (req, res) => {
+export const indexPost = async (req, res) => {
     try{
         const posts = await Posts.findAll({ attributes: ["id", "title", "slug", "body", "userId", "categoryId"] });
         res.render("blog/index", {
@@ -17,6 +17,9 @@ export const detailPost = async (req, res) => {
     try{
         const id = req.params.id;
         const post = await Posts.findOne({ where: { id: id } });
+
+        !post ? res.redirect("/posts") : 
+        
         res.render("blog/detail", {
             post: post
         });

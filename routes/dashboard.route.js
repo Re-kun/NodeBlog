@@ -8,6 +8,7 @@ const router = express.Router();
 
 
 // user
+
 router.get("/dashboard/user", validateToken, indexUser);
 router.get("/user/create", validateToken, createUser);
 router.get("/user/edit/:id", validateToken, editUser);
@@ -18,20 +19,20 @@ router.delete("/user/:id", validateToken, deleteUser);
 
 // Posts
 
-router.get("/post/create", createPost);
-router.get("/dashboard/post", dashboardPost);
-router.get("/post/edit/:id", editPost);
-router.post("/post", storePost);
-router.put("/post/:id", updatePost);
-router.delete("/post/:id", deletePost);
+router.get("/dashboard/post", validateToken, dashboardPost);
+router.get("/post/create", validateToken, createPost);
+router.get("/post/edit/:id", validateToken, editPost);
+router.post("/post", validateToken, storePost);
+router.put("/post/:id", validateToken, updatePost);
+router.delete("/post/:id", validateToken, deletePost);
 
 // Category
 
-router.get("/dashboard/category", indexCategory);
-router.get("/category/create", createCategory);
-router.post("/category", storeCategory);
-router.get("/category/edit/:id", editCategory);
-router.put("/category/:id", updateCategory);
-router.delete("/category/:id", deleteCategory);
+router.get("/dashboard/category", validateToken, indexCategory);
+router.get("/category/create", validateToken, createCategory);
+router.post("/category", validateToken, storeCategory);
+router.get("/category/edit/:id", validateToken, editCategory);
+router.put("/category/:id", validateToken, updateCategory);
+router.delete("/category/:id", validateToken, deleteCategory);
 
 export default router;
