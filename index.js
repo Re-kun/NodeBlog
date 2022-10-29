@@ -1,6 +1,8 @@
 // package
 import express from "express";
 import cookieParser from "cookie-parser";
+import session from "express-session";
+import flash from "connect-flash";
 import path from "path";
 //config express
 import { dirname } from 'path';
@@ -12,8 +14,8 @@ import Users from "./models/user.model.js";
 import Posts from "./models/post.model.js";
 import Categories from "./models/category.model.js";
 // routes
-import IndexRouter from "./routes/index.route.js"
-import DashboardRouter from "./routes/dashboard.route.js"
+import IndexRouter from "./routes/index.route.js";
+import DashboardRouter from "./routes/dashboard.route.js";
 import AuthRouter from "./routes/auth.route.js";
 
 const app = express();
@@ -25,6 +27,17 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(flash());
+app.use(session({
+    secret: "secret",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        sameSite: true,
+        maxAge: 60000
+    }
+  }
+));
 
 // db sync
 try {

@@ -18,8 +18,16 @@ export const postCategory = async (req, res) => {
     try {
         const slug = req.params.slug;
         const category = await Categories.findOne({ where: {slug: slug} });
-        const posts = await Posts.findAll({ where: { categoryId: category.id} });
-        console.log(posts);
+        const posts = await Posts.findAll({ 
+            where: { categoryId: category.id},
+            include: { all: true }
+        });
+
+        res.render("blog/index", {
+            posts: posts,
+            username: req.user ? req.user.username : false
+        });
+        
     }
     catch (error) {
         console.log(error.message);

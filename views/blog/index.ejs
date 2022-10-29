@@ -16,16 +16,17 @@
 				<div class="w-[95%] md:mx-auto sm:mx-36">
 					<div class="max-w-sm mb-5 rounded-lg ">
 						<div>
-							<img class="object-cover h-48 rounded-lg w-96" src="img/art-design-4.jpg" alt="">
+							<img class="object-cover h-48 rounded-lg w-96" src="/img/art-design-4.jpg" alt="">
 						</div>
 						<div class="p-5 mt-3 bg-white border border-gray-200 shadow-md">
 							<div class="grid grid-cols-4 gap-4 mb-2">
 								<div class="px-2 py-1 text-center rounded-md bg-slate-200 text-slate-500"><a href="/category/<%= posts[i].category.slug %>"><%= posts[i].category.name %></a></div>
 							</div>
 							<a href="/post/<%= posts[i].id %>">
-								<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900"><%= posts[i].title %></h5>
+								<h5 class=" text-2xl font-bold tracking-tight text-gray-900"><%= posts[i].title %></h5>
+								<a href="/user/<%= posts[i].user.username %>" class="font-normal text-gray-700">uploaded by : <%= posts[i].user.username %></a>
 							</a>
-							<p class="mb-3 font-normal text-gray-700"><%= posts[i].slug %>.</p>
+							<p class="mb-3 mt-2 font-normal text-gray-700"><%= posts[i].slug %>.</p>
 						</div>
 					</div>
 				</div>

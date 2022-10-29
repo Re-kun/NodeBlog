@@ -1,4 +1,5 @@
 import Users from "../models/user.model.js";
+import Posts from "../models/post.model.js";
 
 export const indexUser = async (req, res) => {
     try {
@@ -9,6 +10,26 @@ export const indexUser = async (req, res) => {
        });
     }   
     catch (error){
+        console.log(error.message);
+    };
+};
+
+export const postUser = async (req, res) => {
+    try {
+        const username = req.params.username;
+        const user = await Users.findOne({ where: {username: username} });
+        const posts = await Posts.findAll({ 
+            where: { userId: user.id},
+            include: { all: true }
+        });
+
+        res.render("blog/index", {
+            posts: posts,
+            username: req.user ? req.user.username : false
+        });
+        
+    }
+    catch (error) {
         console.log(error.message);
     };
 };
