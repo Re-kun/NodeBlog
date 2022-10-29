@@ -4,7 +4,8 @@ export const indexUser = async (req, res) => {
     try {
        const users = await Users.findAll();
        res.render("dashboard/user", {
-            data: users
+            data: users,
+            username: req.user.username
        });
     }   
     catch (error){
@@ -14,7 +15,9 @@ export const indexUser = async (req, res) => {
 
 // create
 export const createUser = (req, res) => {
-    res.render("user/user.create.ejs");
+    res.render("user/user.create.ejs", {
+        username: req.user.username
+    });
 };
 
 export const storeUser = async (req, res) => {
@@ -51,7 +54,8 @@ export const editUser = async (req, res) => {
         const user = await Users.findOne({ where: {id: id}, attributes: ['id', 'username', 'email', 'role'] });
     
         res.render("user/user.edit.ejs", {
-            data: user
+            data: user,
+            username: req.user.username
         });
     }
     catch (error) {

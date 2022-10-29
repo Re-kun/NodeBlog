@@ -76,12 +76,19 @@
 				<a href="#" class="duration-500 hover:text-[#7e7e7e]">About</a>
 			  </li>
 			  <li class="mx-4 my-6 md:my-0">
-				<a href="/dashboard/user" class="duration-500 hover:text-[#7e7e7e]">Rekun</a>
+				<a href="/dashboard/user" class="duration-500 hover:text-[#7e7e7e]"><%= username %></a>
 			  </li>
-		
+		<% if (!username) {%>
 			  <a href="/login" class="bg-black text-white font-[Poppins] duration-500 px-6 py-2 mx-4 hover:bg-white hover:text-black rounded ">
 				Sign In
 			  </a>
+		<% }else { %>
+			<form action="/logout" method="post">
+				<button class="bg-black text-white font-[Poppins] duration-500 px-6 py-2 mx-4 hover:bg-white hover:text-black rounded ">
+					Sign Out
+				</button>
+			</form>
+		<% } %>
 			</ul>
 		  </nav>
 	</header>

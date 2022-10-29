@@ -20,7 +20,7 @@
 						</div>
 						<div class="p-5 mt-3 bg-white border border-gray-200 shadow-md">
 							<div class="grid grid-cols-4 gap-4 mb-2">
-								<div class="px-2 py-1 text-center rounded-md bg-slate-200 text-slate-500"><%= posts[i].category.name %></div>
+								<div class="px-2 py-1 text-center rounded-md bg-slate-200 text-slate-500"><a href="/category/<%= posts[i].category.slug %>"><%= posts[i].category.name %></a></div>
 							</div>
 							<a href="/post/<%= posts[i].id %>">
 								<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900"><%= posts[i].title %></h5>

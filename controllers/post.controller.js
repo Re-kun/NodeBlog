@@ -15,7 +15,8 @@ export const indexPost = async (req, res) => {
         });
 
         res.render("blog/index", {
-            posts: posts
+            posts: posts,
+            username: req.user.username
         });
     }
     catch (error){
@@ -31,7 +32,8 @@ export const detailPost = async (req, res) => {
         !post ? res.redirect("/posts") : 
         
         res.render("blog/detail", {
-            post: post
+            post: post,
+            username: req.user.username
         });
     }
     catch (error) {
@@ -41,10 +43,11 @@ export const detailPost = async (req, res) => {
 
 export const dashboardPost = async (req, res) => {
     try {
-        const userId = req.user.id;
+        const useusername= req.user.username.id;
         const posts = await Posts.findAll({ where: { userId : userId } ,attributes: ["id", "title"] });
         res.render("dashboard/post", {
-            data: posts 
+            data: posts,
+            username: req.user.username
         });
     }
     catch (error) {
@@ -56,14 +59,15 @@ export const dashboardPost = async (req, res) => {
 export const createPost = async (req, res) => {
     const categories = await Categories.findAll();
     res.render("blog/post.create.ejs", {
-        categories: categories
+        categories: categories,
+        username: req.user.username
     });
 };
 
 export const storePost = async (req, res) => {
     try{
         const { title, slug, body, categoryId } = req.body;
-        const userId = req.user.id;
+        const useusername= req.user.username.id;
 
         if(!title || !slug || !body || !userId || !categoryId){
             return res.redirect("/post/create")
@@ -102,7 +106,8 @@ export const editPost = async (req, res) => {
         const post = await Posts.findOne({ where: {id: id}, attributes: ["id", "title", "slug", "body", "userId", "categoryId"] });
     
         res.render("blog/post.edit.ejs", {
-            data: post
+            data: post,
+            username: req.user.username
         });
     }
     catch (error) {

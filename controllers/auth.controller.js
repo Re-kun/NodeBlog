@@ -91,7 +91,7 @@ export const logout = async (req, res) => {
         };
 
         res.clearCookie("token");
-
+        res.redirect("login");
     }
     catch (error) {
         console.log(error.message);

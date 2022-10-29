@@ -1,11 +1,25 @@
 import Categories from "../models/category.model.js";
+import Posts from "../models/post.model.js";
 
 export const indexCategory = async (req, res) => {
     try {
         const categories = await Categories.findAll({ attributes: [ "id", "name", "slug"] });
         res.render("dashboard/category", {
-            data: categories
+            data: categories,
+            username: req.user.username
         });
+    }
+    catch (error) {
+        console.log(error.message);
+    };
+};
+
+export const postCategory = async (req, res) => {
+    try {
+        const slug = req.params.slug;
+        const category = await Categories.findOne({ where: {slug: slug} });
+        const posts = await Posts.findAll({ where: { categoryId: category.id} });
+        console.log(posts);
     }
     catch (error) {
         console.log(error.message);
@@ -14,7 +28,9 @@ export const indexCategory = async (req, res) => {
 
 // create
 export const createCategory = (req, res) => {
-    res.render("category/category.create.ejs");
+    res.render("category/category.create.ejs", {
+        username: req.user.username
+    });
 };
 
 export const storeCategory = async (req, res) => {
@@ -45,7 +61,8 @@ export const editCategory = async (req, res) => {
         const category = await Categories.findOne({ where: {id: id} });
         
         res.render("category/category.edit.ejs", {
-            data: category
+            data: category,
+            username: req.user.username
         });
     }
     catch (error) {
