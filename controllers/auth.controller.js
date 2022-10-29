@@ -1,4 +1,5 @@
 import Users from "../models/user.model.js";
+import crypto from "crypto";
 
 export const signIn = (req, res) => {
     res.render("auth/login");
@@ -63,7 +64,9 @@ export const login = async (req, res) => {
            return res.redirect("/login");
         };
 
-        const token = 'ini token :v';
+        // generate token
+        const token = crypto.randomBytes(30).toString('hex');
+        
         await Users.update({
             token: token
         }, {

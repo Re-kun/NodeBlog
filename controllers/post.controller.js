@@ -1,9 +1,19 @@
 import Posts from "../models/post.model.js";
+import Categories from "../models/category.model.js";
+import Users from "../models/user.model.js";
 
 // get
 export const indexPost = async (req, res) => {
     try{
-        const posts = await Posts.findAll({ attributes: ["id", "title", "slug", "body", "userId", "categoryId"] });
+        const posts = await Posts.findAll({ 
+            attributes: [
+                "id", "title", "slug", "body"
+            ],
+            include: {
+                all: true,
+            }  
+        });
+
         res.render("blog/index", {
             posts: posts
         });
@@ -31,7 +41,8 @@ export const detailPost = async (req, res) => {
 
 export const dashboardPost = async (req, res) => {
     try {
-        const posts = await Posts.findAll({ attributes: ["id", "title"] });
+        const userId = req.user.id;
+        const posts = await Posts.findAll({ where: { userId : userId } ,attributes: ["id", "title"] });
         res.render("dashboard/post", {
             data: posts 
         });
@@ -42,13 +53,17 @@ export const dashboardPost = async (req, res) => {
 };
 
 // create
-export const createPost =  (req, res) => {
-    res.render("blog/post.create.ejs");
+export const createPost = async (req, res) => {
+    const categories = await Categories.findAll();
+    res.render("blog/post.create.ejs", {
+        categories: categories
+    });
 };
 
 export const storePost = async (req, res) => {
     try{
-        const { title, slug, body, userId, categoryId } = req.body;
+        const { title, slug, body, categoryId } = req.body;
+        const userId = req.user.id;
 
         if(!title || !slug || !body || !userId || !categoryId){
             return res.redirect("/post/create")
@@ -62,7 +77,7 @@ export const storePost = async (req, res) => {
             categoryId: categoryId
         };
         await Posts.create(post);
-        res.redirect("/post");
+        res.redirect("/dashboard/post");
     }
     catch (error){
         console.log(error.message);
