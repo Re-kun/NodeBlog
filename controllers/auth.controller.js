@@ -2,11 +2,17 @@ import Users from "../models/user.model.js";
 import crypto from "crypto";
 
 export const signIn = (req, res) => {
-    res.render("auth/login");
+    res.render("auth/login",{
+        status: req.flash("status"),
+        message: req.flash("message")
+    });
 };
 
 export const signUp = (req, res) => {
-    res.render("auth/register");
+    res.render("auth/register", {
+        status: req.flash("status"),
+        message: req.flash("message")
+    });
 };
 
 export const register = async (req, res) => {
@@ -15,15 +21,21 @@ export const register = async (req, res) => {
 
         // validation
         if ( !username || !email || !password || !confirmPassword ) {
+            req.flash("status", 'failed');
+            req.flash("message", 'Data tidak boleh kosong');
             return res.redirect("/register");
         };
         
         if ( password !== confirmPassword ) {
+            req.flash("status", 'failed');
+            req.flash("message", 'Password tidak cocok');
             return res.redirect("/register");
         };
 
         const user = await Users.findOne({ where: {email: email} });
         if (user) {
+           req.flash("status", 'failed');
+           req.flash("message", 'Email sudah terdaftar');
            return res.redirect("/register");
         };
 
@@ -37,6 +49,8 @@ export const register = async (req, res) => {
         };
 
         await Users.create(newUser);
+        req.flash("status", 'success');
+        req.flash("message", 'Register berhasil silahkan login');
         res.redirect("/login");
     }
     catch (error) {
@@ -50,17 +64,21 @@ export const login = async (req, res) => {
         
         // validation
         if(!email || !password){
+            req.flash("status", 'failed');
+            req.flash("message", 'Data tidak boleh kosong');
             return res.redirect("/login");
         }
         
         const user = await Users.findOne({ where: {email:email} });
         if (!user) {
-            console.log("gada")
+           req.flash("status", 'failed');
+           req.flash("message", 'Email tidak terdaftar');
            return res.redirect("/login");
         };
 
         if (user.password !== password) {
-            console.log("g cocok")
+           req.flash("status", 'failed');
+           req.flash("message", 'Password salah');
            return res.redirect("/login");
         };
 
@@ -91,6 +109,8 @@ export const logout = async (req, res) => {
         };
 
         res.clearCookie("token");
+        req.flash("status", 'success');
+        req.flash("message", 'Logout berhasil');
         res.redirect("login");
     }
     catch (error) {

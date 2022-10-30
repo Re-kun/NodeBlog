@@ -13,10 +13,40 @@ export const indexPost = async (req, res) => {
             }  
         });
 
+        console.log(req.flash('message'))
+        console.log(req.flash('message'))
+        console.log(req.flash('message'))
+        console.log(req.flash('message'))
+        console.log(req.flash('message'))
+        console.log(req.flash('message'))
+        console.log(req.flash('message'))
+        console.log(req.flash('message'))
+        console.log(req.flash('message'))
+        console.log(req.flash('message'))
+        console.log(req.flash('message'))
+        console.log(req.flash('message'))
+        console.log(req.flash('message'))
+        console.log(req.flash('message'))
+        console.log(req.flash('message'))
+        console.log(req.flash('message'))
+        console.log(req.flash('message'))
+        console.log(req.flash('message'))
+        console.log(req.flash('message'))
+        console.log(req.flash('message'))
+        console.log(req.flash('message'))
+        console.log(req.flash('message'))
+        console.log(req.flash('message'))
+        console.log(req.flash('message'))
+        console.log(req.flash('message'))
+        console.log(req.flash('message'))
+        console.log(req.flash('message'))
         res.render("blog/index", {
             posts: posts,
-            username: req.user.username
+            username: req.user ? req.user.username : false,
+            status: req.flash("status"),
+            message: req.flash("message")
         });
+
     }
     catch (error){
         console.log(error.message);
@@ -32,13 +62,15 @@ export const detailPost = async (req, res) => {
         
         res.render("blog/detail", {
             post: post,
-            username: req.user.username
+            username: req.user ? req.user.username : false,
+            status: req.flash("status"),
+            message: req.flash("message")
         });
     }
     catch (error) {
         console.log(error.message);
-    }
-}
+    };
+};
 
 export const dashboardPost = async (req, res) => {
     try {
@@ -46,7 +78,9 @@ export const dashboardPost = async (req, res) => {
         const posts = await Posts.findAll({ where: { userId : userId } ,attributes: ["id", "title"] });
         res.render("dashboard/post", {
             data: posts,
-            username: req.user.username
+            username: req.user ? req.user.username : false,
+            status: req.flash("status"),
+            message: req.flash("message")
         });
     }
     catch (error) {
@@ -59,7 +93,9 @@ export const createPost = async (req, res) => {
     const categories = await Categories.findAll();
     res.render("blog/post.create.ejs", {
         categories: categories,
-        username: req.user.username
+        username: req.user ? req.user.username : false,
+        status: req.flash("status"),
+            message: req.flash("message")
     });
 };
 
@@ -69,9 +105,9 @@ export const storePost = async (req, res) => {
         const userId= req.user.id;
 
         if(!title || !slug || !body || !userId || !categoryId){
-            req.flash("status", 'failed');
-            req.flash("message", 'field post tidak boleh kosong');
-            return res.redirect("/post/create")
+            req.flash("status", 'red');
+            req.flash("message", 'Data tidak boleh kosong');
+            return res.redirect("/post/create");
         };
         
         const post = {
@@ -83,8 +119,8 @@ export const storePost = async (req, res) => {
         };
 
         await Posts.create(post);
-        req.flash("status", 'success');
-        req.flash("message", 'post berhasil dibuat')
+        req.flash("status", 'green');
+        req.flash("message", 'Post berhasil dibuat');
         res.redirect("/dashboard/post");
     }
     catch (error){
@@ -99,15 +135,15 @@ export const deletePost = async (req, res) => {
         const result = await Posts.destroy({ where: {id: id }});
 
         if(result == 1){
-            req.flash("status", 'success');
-            req.flash("message", 'post berhasil dihapus');
-            res.redirect("/dashboard/post")
+            req.flash("status", 'green');
+            req.flash("message", 'Post berhasil dihapus');
+          return  res.redirect("/dashboard/post");
         };
 
         if (result == 0){
-            req.flash("status", 'failed');
-            req.flash("message", 'tidak bisa menghapus post dengan id' + id);
-            res.redirect("/dashboard/post")
+            req.flash("status", 'red');
+            req.flash("message", 'Tidak bisa menghapus post dengan id' + id);
+          return res.redirect("/dashboard/post");
         }
     }   
     catch (error) {
@@ -123,7 +159,9 @@ export const editPost = async (req, res) => {
     
         res.render("blog/post.edit.ejs", {
             data: post,
-            username: req.user.username
+            username: req.user ? req.user.username : false,
+            status: req.flash("status"),
+            message: req.flash("message")
         });
     }
     catch (error) {
@@ -138,6 +176,8 @@ export const updatePost = async (req, res) => {
         const { title, slug, body, categoryId } = req.body;
 
         if( !title || !slug || !body || userId || categoryId ) {
+          req.flash("status", 'red');
+          req.flash("message", 'Data tidak boleh kosong');s
           return res.redirect("/post/update/" + id);
         };
 
@@ -154,15 +194,15 @@ export const updatePost = async (req, res) => {
         });
 
         if( result == 1) {
-            req.flash("status", 'success');
-            req.flash("message", 'data post berhasil diubah');
+            req.flash("status", 'green');
+            req.flash("message", 'Data post berhasil diupdate');
             res.redirect("/dashboard/post");
         };
 
         
         if( result == 0) {
-            req.flash("status", 'success');
-            req.flash("message", 'tidak bisa mengubah data post dengan id' + id);
+            req.flash("status", 'green');
+            req.flash("message", 'Tidak bisa mengupdate data post dengan id' + id);
             res.redirect("/dashboard/post");
         };
     }

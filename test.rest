@@ -1,1 +1,19 @@
-GET http://localhost:3000/post/create
+###
+POST http://localhost:3000/post
+Content-Type: application/json
+
+{
+    "email": "schwartz@gmail.com",
+    "password": "1"
+}
+
+###
+POST http://localhost:3000/post
+Content-Type: application/json
+
+{
+    "title": "re",
+    "email": "hikarisakata@gmail.com",
+    "password": "123",
+    "confirmPassword": "123"
+}

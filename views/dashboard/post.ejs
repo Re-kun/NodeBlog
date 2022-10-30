@@ -15,6 +15,18 @@
 			<div class="pr-8 lg:pr-5 pb-10 lg:ml-10 md:ml-0 md:pl-8 lg:px-0 lg:py-3 lg:w-[200%] overflow-hidden md:overflow-y-scroll overflow-x-hidden table-admin">
 				<table class="w-full table-fixed ">
 					<h1 class="text-black text-3xl mb-5">Post</h1>
+			<% if(message.length !== 0 ){ %>	
+				<div class="bg-<%= status %>-100 my-2 p-5 w-full border-l-4 border-<%= status %>-500">
+					<div class="flex space-x-3">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="flex-none fill-current text-<%= status %>-500 h-4 w-4">
+						<path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.597 17.954l-4.591-4.55-4.555 4.596-1.405-1.405 4.547-4.592-4.593-4.552 1.405-1.405 4.588 4.543 4.545-4.589 1.416 1.403-4.546 4.587 4.592 4.548-1.403 1.416z" />
+					</svg>
+					<div class="leading-tight flex flex-col space-y-2">
+						<div class="flex-1 leading-snug text-sm text-<%= status %>-600"><%= message%></div>
+					</div>
+					</div>
+				</div>
+			<% } %>		
 					<thead class="bg-[#c2c2c2] text-[#5c5c5c] md:table-header-group hidden">
 					  <tr>
 						<th class="px-3 py-2 text-left w-60">Name</th>

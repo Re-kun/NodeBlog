@@ -6,7 +6,9 @@ export const indexUser = async (req, res) => {
        const users = await Users.findAll();
        res.render("dashboard/user", {
             data: users,
-            username: req.user.username
+            username: req.user ? req.user.username : false,
+            status: req.flash("status"),
+            error: req.flash("error")
        });
     }   
     catch (error){
@@ -23,9 +25,11 @@ export const postUser = async (req, res) => {
             include: { all: true }
         });
 
-        res.render("blog/index", {
+        res.render("blog/index", {            
             posts: posts,
-            username: req.user ? req.user.username : false
+            username: req.user ? req.user.username : false,
+            status: req.flash("status"),
+            error: req.flash("error") 
         });
         
     }
@@ -37,7 +41,9 @@ export const postUser = async (req, res) => {
 // create
 export const createUser = (req, res) => {
     res.render("user/user.create.ejs", {
-        username: req.user.username
+        username: req.user ? req.user.username : false,
+         staus: req.flash("status"),
+            error: req.flash("error")
     });
 };
 
@@ -46,10 +52,14 @@ export const storeUser = async (req, res) => {
         const { username, email,  password, confirmPassword, role } = req.body;
 
         if (!username || !email || !password || !confirmPassword || !role) {
+           req.flash("status", 'failed');
+           req.flash("message", 'Data tidak boleh kosong');
            return res.redirect("/user/create");
         };
 
         if(password !== confirmPassword) {
+            req.flash("status", 'failed');
+            req.flash("message", 'Password tidak cocok');
             return res.redirect("/user/create");
         };
 
@@ -61,6 +71,8 @@ export const storeUser = async (req, res) => {
         };
 
         await Users.create(newUser);
+        req.flash("status", 'success');
+        req.flash("message", 'User berhasil di tambahkan');
         res.redirect("/dashboard/user");
     }
     catch (error) {
@@ -76,7 +88,9 @@ export const editUser = async (req, res) => {
     
         res.render("user/user.edit.ejs", {
             data: user,
-            username: req.user.username
+            username: req.user ? req.user.username : false,
+            status: req.flash("status"),
+            error: req.flash("error")
         });
     }
     catch (error) {
@@ -100,11 +114,15 @@ export const updateUser = async (req, res) => {
         });
 
         if(result == 1) {
-           return console.log("Berhasil")
+           req.flash("status", 'success');
+           req.flash("message", 'Data user berhasil diupdate');
+           res.redirect("/dashboard/user");
         };
 
         if(result == 0) {
-            return console.log("ada yang salah");
+            req.flash("status", 'failed');
+            req.flash("message", 'tidak dapat mengupdate data user dengan id ' + id);
+            res.redirect("/dashboard/user");
         };
     }
     catch (error) {
@@ -116,7 +134,11 @@ export const updateUser = async (req, res) => {
 export const deleteUser = async (req, res) => {
     try {
         const id = req.params.id;
-        await Users.destroy({ where: {id: id} });
+         await Users.destroy({ where: {id: id} });
+         await Posts.destroy({where: {userId: id} });
+
+        req.flash("status", 'success');
+        req.flash("message", 'User berhasil dihapus');
     }
     catch (error) {
         console.log(error.message);
