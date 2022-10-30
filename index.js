@@ -26,8 +26,7 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
-app.use(flash());
+app.use(cookieParser('secret'));
 app.use(session({
     secret: "secret",
     resave: false,
@@ -36,8 +35,9 @@ app.use(session({
         sameSite: true,
         maxAge: 60000
     }
-  }
+}
 ));
+app.use(flash());
 
 // db sync
 try {

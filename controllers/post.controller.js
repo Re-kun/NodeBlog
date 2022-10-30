@@ -13,33 +13,6 @@ export const indexPost = async (req, res) => {
             }  
         });
 
-        console.log(req.flash('message'))
-        console.log(req.flash('message'))
-        console.log(req.flash('message'))
-        console.log(req.flash('message'))
-        console.log(req.flash('message'))
-        console.log(req.flash('message'))
-        console.log(req.flash('message'))
-        console.log(req.flash('message'))
-        console.log(req.flash('message'))
-        console.log(req.flash('message'))
-        console.log(req.flash('message'))
-        console.log(req.flash('message'))
-        console.log(req.flash('message'))
-        console.log(req.flash('message'))
-        console.log(req.flash('message'))
-        console.log(req.flash('message'))
-        console.log(req.flash('message'))
-        console.log(req.flash('message'))
-        console.log(req.flash('message'))
-        console.log(req.flash('message'))
-        console.log(req.flash('message'))
-        console.log(req.flash('message'))
-        console.log(req.flash('message'))
-        console.log(req.flash('message'))
-        console.log(req.flash('message'))
-        console.log(req.flash('message'))
-        console.log(req.flash('message'))
         res.render("blog/index", {
             posts: posts,
             username: req.user ? req.user.username : false,
@@ -132,19 +105,11 @@ export const storePost = async (req, res) => {
 export const deletePost = async (req, res) => {
     try {
         const id = req.params.id;
-        const result = await Posts.destroy({ where: {id: id }});
+        await Posts.destroy({ where: {id: id }});
 
-        if(result == 1){
-            req.flash("status", 'green');
-            req.flash("message", 'Post berhasil dihapus');
-          return  res.redirect("/dashboard/post");
-        };
-
-        if (result == 0){
-            req.flash("status", 'red');
-            req.flash("message", 'Tidak bisa menghapus post dengan id' + id);
-          return res.redirect("/dashboard/post");
-        }
+        req.flash("status", 'green');
+        req.flash("message", 'Post berhasil dihapus');
+        res.redirect("/dashboard/post");
     }   
     catch (error) {
         console.log(error.message);
@@ -163,6 +128,7 @@ export const editPost = async (req, res) => {
             status: req.flash("status"),
             message: req.flash("message")
         });
+        res.redirect("/dashboard/post");
     }
     catch (error) {
         console.log(error.message);
