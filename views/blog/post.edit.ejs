@@ -8,8 +8,21 @@
               <div class="flex flex-wrap items-center justify-center h-full text-gray-800 g-6">
                 <div class="md:w-8/12 lg:w-5/12 lg:ml-20 ">
                   <h1 class="mb-5 text-3xl ">Edit Post</h1>
-                  <form>
+                  <% if(message.length !== 0 ){ %>	
+                    <div class="bg-<%= status %>-100 my-2 p-5 w-full border-l-4 border-<%= status %>-500">
+                      <div class="flex space-x-3">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="flex-none fill-current text-<%= status %>-500 h-4 w-4">
+                        <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.597 17.954l-4.591-4.55-4.555 4.596-1.405-1.405 4.547-4.592-4.593-4.552 1.405-1.405 4.588 4.543 4.545-4.589 1.416 1.403-4.546 4.587 4.592 4.548-1.403 1.416z" />
+                      </svg>
+                      <div class="leading-tight flex flex-col space-y-2">
+                        <div class="flex-1 leading-snug text-sm text-<%= status %>-600"><%= message%></div>
+                      </div>
+                      </div>
+                    </div>
+                  <% } %>	
+                  <form  action="/post/edit/<%= data.id %>" method="post">
 
+                    <input type="hidden" name="_method" value="PUT">
                     <!-- title input -->
                     <div class="mb-6">
                       <input
@@ -22,26 +35,21 @@
                       />
                     </div>
 
-                    <!-- userId input -->
-                    <div class="mb-6">
-                      <input
-                        type="number"
-                        class="block w-full px-4 py-2 m-0 text-xl font-normal border border-solid rounded form-control focus:text-slate-500 bg-slate-300 placeholder-slate-600 focus:outline-none"
-                        placeholder="user id"
-                        name="userId"
-                        required
-                      />
-                    </div>
-
-                    <!-- categoryId input -->
-                    <div class="mb-6">
-                      <input
-                        type="number"
-                        class="block w-full px-4 py-2 m-0 text-xl font-normal border border-solid rounded form-control focus:text-slate-500 bg-slate-300 placeholder-slate-600 focus:outline-none"
-                        placeholder="category id"
-                        name="categoryId"
-                        required
-                      />
+     
+                    <!-- category -->
+                    <div class="mb-2">
+                      
+                      <div class="w-full  mb-6 ">
+                        <div class="relative">
+                          <select class="categoryId-input block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="categoryId" id="grid-state" >
+                            <% for(let i = 0; i < categories.length; i++) { %>
+                              <option value="<%= categories[i].id %>"><%= categories[i].name %></option>
+                            <% } %>
+                          </select>
+                          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                          </div>
+                       </div>
                     </div>
 
                     <!-- slug input -->
@@ -70,11 +78,10 @@
 
                     <!-- Submit button -->
                     <button
-                      type="button"
+                      type="submit"
                       class="inline-block w-full py-3 text-sm font-medium leading-snug text-white uppercase transition duration-150 ease-in-out bg-black rounded-lg shadow-md px-7 hover:bg-white hover:text-black hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg "
                       data-mdb-ripple="true"
                       data-mdb-ripple-color="light"
-                      onclick="updatePost( Number('<%= data.id %>') )"
                     >
                       Sign in
                     </button>
@@ -87,29 +94,5 @@
 
 	</main>
 	<!-- endContainer -->
-
-    <script>
-        function updatePost (id) {
-            const title = document.querySelector(".title-input").value
-            const slug = document.querySelector(".slug-input ").value 
-            const body = document.querySelector(".body-input ").value 
-
-            const newPost = {
-                title: title,
-                slug: slug,
-                body: body
-            };
-
-            fetch(`http://localhost:3000/post/${id}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type" : "application/json"
-                },
-                body: JSON.stringify(newPost)
-            }).then( result => console.log(result) ).catch( error => console.log(error.message) );
-            location.reload()
-        }
-        
-    </script>
 <%- include("../layouts/footer") %>
 

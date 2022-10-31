@@ -68,7 +68,7 @@ export const createPost = async (req, res) => {
         categories: categories,
         username: req.user ? req.user.username : false,
         status: req.flash("status"),
-            message: req.flash("message")
+        message: req.flash("message")
     });
 };
 
@@ -97,7 +97,9 @@ export const storePost = async (req, res) => {
         res.redirect("/dashboard/post");
     }
     catch (error){
-        console.log(error.message);
+        req.flash("status", 'red');
+        req.flash("message", error.message);
+        res.redirect("/post/create");
     };  
 };
 
@@ -105,11 +107,20 @@ export const storePost = async (req, res) => {
 export const deletePost = async (req, res) => {
     try {
         const id = req.params.id;
-        await Posts.destroy({ where: {id: id }});
+        const result = await Posts.destroy({ where: {id: 328039 }});
 
-        req.flash("status", 'green');
-        req.flash("message", 'Post berhasil dihapus');
-        res.redirect("/dashboard/post");
+        if( result == 1) {
+            req.flash("status", 'green');
+            req.flash("message", 'Data post berhasil diupdate');
+            return res.redirect("/dashboard/post");
+        };
+
+        
+        if( result == 0) {
+            req.flash("status", 'red');
+            req.flash("message", 'Tidak bisa mengupdate data post dengan id ' + id);
+            return res.redirect("/dashboard/post");
+        };
     }   
     catch (error) {
         console.log(error.message);
@@ -121,14 +132,15 @@ export const editPost = async (req, res) => {
     try{
         const id = req.params.id;
         const post = await Posts.findOne({ where: {id: id}, attributes: ["id", "title", "slug", "body", "userId", "categoryId"] });
+        const categories = await Categories.findAll();
     
         res.render("blog/post.edit.ejs", {
+            categories: categories,
             data: post,
             username: req.user ? req.user.username : false,
             status: req.flash("status"),
             message: req.flash("message")
         });
-        res.redirect("/dashboard/post");
     }
     catch (error) {
         console.log(error.message);
@@ -141,10 +153,10 @@ export const updatePost = async (req, res) => {
         const userId = req.user.id;
         const { title, slug, body, categoryId } = req.body;
 
-        if( !title || !slug || !body || userId || categoryId ) {
+        if( !title || !slug || !body || !userId || !categoryId ) {
           req.flash("status", 'red');
-          req.flash("message", 'Data tidak boleh kosong');s
-          return res.redirect("/post/update/" + id);
+          req.flash("message", 'Data tidak boleh kosong');
+          return res.redirect("/post/edit/" + id);
         };
 
         const post = {
@@ -159,20 +171,25 @@ export const updatePost = async (req, res) => {
             where: { id: id } 
         });
 
+
         if( result == 1) {
             req.flash("status", 'green');
             req.flash("message", 'Data post berhasil diupdate');
-            res.redirect("/dashboard/post");
+            return res.redirect("/dashboard/post");
         };
 
         
         if( result == 0) {
-            req.flash("status", 'green');
-            req.flash("message", 'Tidak bisa mengupdate data post dengan id' + id);
-            res.redirect("/dashboard/post");
+
+            req.flash("status", 'red');
+            req.flash("message", 'Tidak bisa mengupdate data post dengan id ' + id);
+            return res.redirect("/dashboard/post");
         };
     }
     catch (error) {
-        console.log(error.message);
+        req.flash("status", 'red');
+        req.flash("message", error.message);
+        return res.redirect("/post/edit/" + req.params.id);
+
     };
 };

@@ -21,8 +21,8 @@ router.delete("/user/:id", validateToken, deleteUser);
 router.get("/dashboard/post", validateToken, dashboardPost);
 router.get("/post/create", validateToken, createPost);
 router.get("/post/edit/:id", validateToken, editPost);
+router.post("/post/edit/:id", validateToken, updatePost);
 router.post("/post", validateToken, storePost);
-router.put("/post/:id", validateToken, updatePost);
 router.delete("/post/:id", validateToken, deletePost);
 
 // Category
