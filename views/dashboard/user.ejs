@@ -60,16 +60,4 @@
 	</main>
 	<!-- endContainer -->
 
-	<script>
-		function deleteUser(id) {
-			fetch("http://localhost:3000/user/" + id, {
-			  method: "DELETE",
-			  headers: {
-				"Content-Type" : "application/json"
-			  },
-			}).then( result => console.log(result) ).catch( error => console.log(error.message) );
-
-			location.reload()
-		};
-	</script>
-    <%- include("../layouts/footer")%>
+	<%- include("../layouts/footer")%>

@@ -14,7 +14,6 @@ router.get("/user/edit/:id", validateToken, editUser);
 router.post("/user", validateToken, storeUser);
 router.post("/user/update/:id", validateToken, updateUser);
 router.post("/user/delete/:id", validateToken, deleteUser);
-// router.get("/tes", tes);
 
 // Posts
 
@@ -29,8 +28,8 @@ router.post("/post/delete/:id", validateToken, deletePost);
 
 router.get("/dashboard/category", validateToken, indexCategory);
 router.get("/category/create", validateToken, createCategory);
-router.post("/category", validateToken, storeCategory);
 router.get("/category/edit/:id", validateToken, editCategory);
+router.post("/category", validateToken, storeCategory);
 router.post("/category/update/:id", validateToken, updateCategory);
 router.post("/category/delete/:id", validateToken, deleteCategory);
 

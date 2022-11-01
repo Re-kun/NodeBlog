@@ -54,7 +54,7 @@ export const storeCategory = async (req, res) => {
         if(!name || !slug){
             req.flash("status", 'red');
             req.flash("message", 'Data tidak boleh kosong');
-            res.redirect("/category/create");
+            return res.redirect("/category/create");
         };
 
         const newCategory = {
@@ -94,6 +94,12 @@ export const updateCategory = async (req, res) => {
     try {
         const id = req.params.id;
         const { name, slug } = req.body;
+
+        if( !name || !slug ) {
+            req.flash("status", 'red');
+            req.flash("message", 'Data tidak boleh kosong');
+            return res.redirect("/category/edit/" + id);
+          };
 
         const newData = {
             name: name,

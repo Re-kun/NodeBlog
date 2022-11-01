@@ -103,6 +103,12 @@ export const updateUser = async (req, res) => {
         const id = req.params.id;
         const { username, email, role } = req.body;
 
+        if( !username || !email || !role ) {
+            req.flash("status", 'red');
+            req.flash("message", 'Data tidak boleh kosong');
+            return res.redirect("/user/edit/" + id);
+        };
+
         const newUser = {
             username: username,
             email: email,
@@ -118,8 +124,7 @@ export const updateUser = async (req, res) => {
            req.flash("message", 'Data user berhasil diupdate');
         } else {
             req.flash("status", 'red');
-            req.flash("message", 'tidak dapat mengupdate data user dengan id ' + id);
-            return res.redirect("/user/edit/" + id);
+            req.flash("message", 'Tidak dapat mengupdate data user dengan id ' + id);
         };
 
         res.redirect("/dashboard/user");
@@ -141,7 +146,7 @@ export const deleteUser = async (req, res) => {
              req.flash("message", 'User berhasil dihapus');
         } else {
             req.flash("status", 'red');
-            req.flash("message", 'tidak dapat menghapus data user dengan id ' + id);
+            req.flash("message", 'Tidak dapat menghapus data user dengan id ' + id);
         };
 
         res.redirect("/dashboard/user");
