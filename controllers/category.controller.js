@@ -52,7 +52,7 @@ export const storeCategory = async (req, res) => {
         const { name, slug } = req.body;
 
         if(!name || !slug){
-            req.flash("status", 'failed');
+            req.flash("status", 'red');
             req.flash("message", 'Data tidak boleh kosong');
             res.redirect("/category/create");
         };
@@ -63,7 +63,7 @@ export const storeCategory = async (req, res) => {
         };
 
         await Categories.create(newCategory);
-        req.flash("status", 'success');
+        req.flash("status", 'green');
         req.flash("message", 'Category berhasil di tambahkan');
         res.redirect("/dashboard/category");
     }
@@ -106,16 +106,14 @@ export const updateCategory = async (req, res) => {
 
         if(result == 1) {
             console.log("berhasil");
-            req.flash("status", 'success');
+            req.flash("status", 'green');
             req.flash("message", 'Data category berhasil di update');
-            res.redirect("/dashboard/category");
-        };
-
-        if(result == 0) {
-            req.flash("status", 'failed');
+        } else {
+            req.flash("status", 'red');
             req.flash("message", 'Tidak dapat mengupdate data category dengan id ' + id);
-            res.redirect("/dashboard/category");
         };
+        
+        res.redirect("/dashboard/category");
     }
     catch (error) {
         console.log(error.message);
@@ -126,20 +124,17 @@ export const updateCategory = async (req, res) => {
 export const deleteCategory = async (req, res) => {
     try {
         const id = req.params.id;
-        console.log(id);
-        await Categories.destroy({ where: {id: id} });
+        const result = await Categories.destroy({ where: {id: id} });
 
         if(result == 1){
-            req.flash("status", 'success');
+            req.flash("status", 'green');
             req.flash("message", 'Category berhasil dihapus');
-            res.redirect("/dashboard/category");
+        } else {
+            req.flash("status", 'red');
+            req.flash("message", 'Tidak bisa menghapus category dengan id ' + id);
         };
 
-        if (result == 0){
-            req.flash("status", 'failed');
-            req.flash("message", 'Tidak bisa menghapus category dengan id' + id);
-            res.redirect("/dashboard/category");
-        };
+        res.redirect("/dashboard/category");
     }
     catch (error) {
         console.log(error.message);

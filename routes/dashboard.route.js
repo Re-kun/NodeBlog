@@ -12,8 +12,8 @@ router.get("/dashboard/user", validateToken, indexUser);
 router.get("/user/create", validateToken, createUser);
 router.get("/user/edit/:id", validateToken, editUser);
 router.post("/user", validateToken, storeUser);
-router.put("/user/:id", validateToken, updateUser);
-router.delete("/user/:id", validateToken, deleteUser);
+router.post("/user/update/:id", validateToken, updateUser);
+router.post("/user/delete/:id", validateToken, deleteUser);
 // router.get("/tes", tes);
 
 // Posts
@@ -23,7 +23,7 @@ router.get("/post/create", validateToken, createPost);
 router.get("/post/edit/:id", validateToken, editPost);
 router.post("/post/edit/:id", validateToken, updatePost);
 router.post("/post", validateToken, storePost);
-router.delete("/post/:id", validateToken, deletePost);
+router.post("/post/delete/:id", validateToken, deletePost);
 
 // Category
 
@@ -31,7 +31,7 @@ router.get("/dashboard/category", validateToken, indexCategory);
 router.get("/category/create", validateToken, createCategory);
 router.post("/category", validateToken, storeCategory);
 router.get("/category/edit/:id", validateToken, editCategory);
-router.put("/category/:id", validateToken, updateCategory);
-router.delete("/category/:id", validateToken, deleteCategory);
+router.post("/category/update/:id", validateToken, updateCategory);
+router.post("/category/delete/:id", validateToken, deleteCategory);
 
 export default router;

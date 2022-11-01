@@ -8,7 +8,7 @@ export const indexUser = async (req, res) => {
             data: users,
             username: req.user ? req.user.username : false,
             status: req.flash("status"),
-            error: req.flash("error")
+            message: req.flash("message")
        });
     }   
     catch (error){
@@ -29,7 +29,7 @@ export const postUser = async (req, res) => {
             posts: posts,
             username: req.user ? req.user.username : false,
             status: req.flash("status"),
-            error: req.flash("error") 
+            message: req.flash("message") 
         });
         
     }
@@ -42,8 +42,8 @@ export const postUser = async (req, res) => {
 export const createUser = (req, res) => {
     res.render("user/user.create.ejs", {
         username: req.user ? req.user.username : false,
-         staus: req.flash("status"),
-            error: req.flash("error")
+         status: req.flash("status"),
+         message: req.flash("message")
     });
 };
 
@@ -52,13 +52,13 @@ export const storeUser = async (req, res) => {
         const { username, email,  password, confirmPassword, role } = req.body;
 
         if (!username || !email || !password || !confirmPassword || !role) {
-           req.flash("status", 'failed');
+           req.flash("status", 'red');
            req.flash("message", 'Data tidak boleh kosong');
            return res.redirect("/user/create");
         };
 
         if(password !== confirmPassword) {
-            req.flash("status", 'failed');
+            req.flash("status", 'red');
             req.flash("message", 'Password tidak cocok');
             return res.redirect("/user/create");
         };
@@ -71,7 +71,7 @@ export const storeUser = async (req, res) => {
         };
 
         await Users.create(newUser);
-        req.flash("status", 'success');
+        req.flash("status", 'green');
         req.flash("message", 'User berhasil di tambahkan');
         res.redirect("/dashboard/user");
     }
@@ -90,7 +90,7 @@ export const editUser = async (req, res) => {
             data: user,
             username: req.user ? req.user.username : false,
             status: req.flash("status"),
-            error: req.flash("error")
+            message: req.flash("message")
         });
     }
     catch (error) {
@@ -114,16 +114,15 @@ export const updateUser = async (req, res) => {
         });
 
         if(result == 1) {
-           req.flash("status", 'success');
+           req.flash("status", 'green');
            req.flash("message", 'Data user berhasil diupdate');
-           res.redirect("/dashboard/user");
+        } else {
+            req.flash("status", 'red');
+            req.flash("message", 'tidak dapat mengupdate data user dengan id ' + id);
+            return res.redirect("/user/edit/" + id);
         };
 
-        if(result == 0) {
-            req.flash("status", 'failed');
-            req.flash("message", 'tidak dapat mengupdate data user dengan id ' + id);
-            res.redirect("/dashboard/user");
-        };
+        res.redirect("/dashboard/user");
     }
     catch (error) {
         console.log(error.message);
@@ -133,24 +132,21 @@ export const updateUser = async (req, res) => {
 // delete 
 export const deleteUser = async (req, res) => {
     try {
-        const id = req.params.id;
-         await Users.destroy({ where: {id: id} });
-         await Posts.destroy({where: {userId: id} });
+         const id = req.params.id;
+         const result = await Users.destroy({ where: {id: id} });
 
-        req.flash("status", 'success');
-        req.flash("message", 'User berhasil dihapus');
+         if (result == 1 ){
+             await Posts.destroy({where: {userId: id} });
+             req.flash("status", 'green');
+             req.flash("message", 'User berhasil dihapus');
+        } else {
+            req.flash("status", 'red');
+            req.flash("message", 'tidak dapat menghapus data user dengan id ' + id);
+        };
+
+        res.redirect("/dashboard/user");
     }
     catch (error) {
         console.log(error.message);
     };
 };
-
-// export const tes = async (req, res) => {
-//     try {
-//         const data = '';
-//         res.send(data);
-//     }
-//     catch(error) {
-//         console.log(error.message);
-//     }
-// }

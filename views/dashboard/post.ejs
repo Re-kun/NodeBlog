@@ -43,7 +43,12 @@
 						<td class="px-3 py-3 text-left border-b border-[#4e4e4e] "><%= data[i].id %></td>
 						<td class="px-3 py-3 text-left border-b border-[#4e4e4e]"><%= data[i].title %></td>
 						<td class="px-3 py-3 border-b border-[#4e4e4e]"><a href="/post/edit/<%= data[i].id %>" class="px-3 py-1 text-blue-500 border border-blue-500 rounded-lg hover:text-white hover:bg-blue-500">Update</a></td>
-						<td onclick="deletePost(Number('<%= data[i].id %>'))" class="px-3 py-5 border-b border-[#4e4e4e]"><span class="px-3 py-1 text-red-500 border border-red-500 rounded-lg hover:text-white hover:bg-red-500">Delete</span></td>
+						<td class="px-3 py-5 border-b border-[#4e4e4e]">
+							<form action="/post/delete/<%= data[i].id %>" method="post">
+								<input type="hidden" name="_method" value="DELETE">
+								<button type="submit"><span class="px-3 py-1 text-red-500 border border-red-500 rounded-lg hover:text-white hover:bg-red-500">Delete</span></button>
+							</form>
+						</td>
 					  </tr>
 
 					<% } %>
@@ -54,18 +59,4 @@
 
 	</main>
 	<!-- endContainer -->
-
-	<script>
-		function deletePost (id) {
-			fetch("http://localhost:3000/post/" + id, {
-				method: "DELETE",
-				headers: {
-					"Content-Type":"application/json" 
-				},
-			}).then( result => console.log(result) ).catch( err => console.log(err.message) );
-
-			location.reload();
-		};
-	</script>
-
     <%- include("../layouts/footer")%>
