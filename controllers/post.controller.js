@@ -45,6 +45,30 @@ export const detailPost = async (req, res) => {
     };
 };
 
+export const searchPost = async (req, res) => {
+    try {
+        if(!req.query.title){
+            return res.redirect("/posts");
+        }
+
+        const posts = await Posts.findAll({ 
+            where: {title:  req.query.title }, 
+            include: { all: true },
+            attributes: [
+                "id", "title"
+            ] 
+        });
+        
+        res.render("blog/index", {
+            posts: posts,
+            username: req.user ? req.user.username : false
+        });
+    }
+    catch (error) {
+        console.log(error.message);
+    }
+}
+
 export const dashboardPost = async (req, res) => {
     try {
         const userId= req.user.id;
