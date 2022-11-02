@@ -12,7 +12,7 @@ export const indexPost = async (req, res) => {
                 all: true,
             }  
         });
-
+        
         res.render("blog/index", {
             posts: posts,
             username: req.user ? req.user.username : false,
@@ -112,11 +112,11 @@ export const deletePost = async (req, res) => {
 
         if( result == 1) {
             req.flash("status", 'green');
-            req.flash("message", 'Data post berhasil diupdate');
+            req.flash("message", 'Data post berhasil dihapus');
              
         }else{
             req.flash("status", 'red');
-            req.flash("message", 'Tidak bisa mengupdate data post dengan id ' + id);
+            req.flash("message", 'Tidak bisa menghapus data post dengan id ' + id);
         };
      
         res.redirect("/dashboard/post");

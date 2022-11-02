@@ -57,6 +57,14 @@ export const storeUser = async (req, res) => {
            return res.redirect("/user/create");
         };
 
+        const user = await Users.findOne({ where: {email: email} });
+
+        if (user) {
+           req.flash("status", 'red');
+           req.flash("message", 'Email sudah di pakai');
+           return res.redirect("/user/create");
+        }
+
         if(password !== confirmPassword) {
             req.flash("status", 'red');
             req.flash("message", 'Password tidak cocok');
@@ -138,10 +146,10 @@ export const updateUser = async (req, res) => {
 export const deleteUser = async (req, res) => {
     try {
          const id = req.params.id;
+         await Posts.destroy({ where: {userId: id} });
          const result = await Users.destroy({ where: {id: id} });
-
+         
          if (result == 1 ){
-             await Posts.destroy({where: {userId: id} });
              req.flash("status", 'green');
              req.flash("message", 'User berhasil dihapus');
         } else {

@@ -21,20 +21,20 @@ export const register = async (req, res) => {
 
         // validation
         if ( !username || !email || !password || !confirmPassword ) {
-            req.flash("status", 'failed');
+            req.flash("status", 'red');
             req.flash("message", 'Data tidak boleh kosong');
             return res.redirect("/register");
         };
         
         if ( password !== confirmPassword ) {
-            req.flash("status", 'failed');
+            req.flash("status", 'red');
             req.flash("message", 'Password tidak cocok');
             return res.redirect("/register");
         };
 
         const user = await Users.findOne({ where: {email: email} });
         if (user) {
-           req.flash("status", 'failed');
+           req.flash("status", 'red');
            req.flash("message", 'Email sudah terdaftar');
            return res.redirect("/register");
         };
@@ -49,7 +49,7 @@ export const register = async (req, res) => {
         };
 
         await Users.create(newUser);
-        req.flash("status", 'success');
+        req.flash("status", 'green');
         req.flash("message", 'Register berhasil silahkan login');
         res.redirect("/login");
     }
@@ -64,20 +64,20 @@ export const login = async (req, res) => {
         
         // validation
         if(!email || !password){
-            req.flash("status", 'failed');
+            req.flash("status", 'red');
             req.flash("message", 'Data tidak boleh kosong');
             return res.redirect("/login");
         }
         
         const user = await Users.findOne({ where: {email:email} });
         if (!user) {
-           req.flash("status", 'failed');
+           req.flash("status", 'red');
            req.flash("message", 'Email tidak terdaftar');
            return res.redirect("/login");
         };
 
         if (user.password !== password) {
-           req.flash("status", 'failed');
+           req.flash("status", 'red');
            req.flash("message", 'Password salah');
            return res.redirect("/login");
         };
@@ -109,7 +109,7 @@ export const logout = async (req, res) => {
         };
 
         res.clearCookie("token");
-        req.flash("status", 'success');
+        req.flash("status", 'green');
         req.flash("message", 'Logout berhasil');
         res.redirect("login");
     }
