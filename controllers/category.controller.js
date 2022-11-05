@@ -116,7 +116,7 @@ export const updateCategory = async (req, res) => {
             req.flash("message", 'Data category berhasil di update');
         } else {
             req.flash("status", 'red');
-            req.flash("message", 'Tidak dapat mengupdate data category dengan id ' + id);
+            req.flash("message", `Tidak bisa mengupdate category dengan id ${id}`);
         };
         
         res.redirect("/dashboard/category");
@@ -137,7 +137,7 @@ export const deleteCategory = async (req, res) => {
             req.flash("message", 'Category berhasil dihapus');
         } else {
             req.flash("status", 'red');
-            req.flash("message", 'Tidak bisa menghapus category dengan id ' + id);
+            req.flash("message", `Tidak bisa menghapus category dengan id ${id}`);
         };
 
         res.redirect("/dashboard/category");

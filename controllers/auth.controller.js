@@ -1,4 +1,5 @@
 import Users from "../models/user.model.js";
+import bcyrpt from "bcrypt";
 import crypto from "crypto";
 
 export const signIn = (req, res) => {
@@ -17,10 +18,13 @@ export const signUp = (req, res) => {
 
 export const register = async (req, res) => {
     try {
+    
         const { username, email, password, confirmPassword } = req.body;
-
+        
         // validation
-        if ( !username || !email || !password || !confirmPassword ) {
+        
+        const isNull = !username || !email || !password || !confirmPassword;
+        if (isNull) {
             req.flash("status", 'red');
             req.flash("message", 'Data tidak boleh kosong');
             return res.redirect("/register");
@@ -39,12 +43,16 @@ export const register = async (req, res) => {
            return res.redirect("/register");
         };
 
+        // hash password
+        const salt = await bcyrpt.genSalt();
+        const hashPassword = await bcyrpt.hash(password, salt);
+
         // insert to db
 
         const newUser = {
             username: username,
             email: email,
-            password: password,
+            password: hashPassword,
             role: "user"
         };
 
@@ -52,6 +60,8 @@ export const register = async (req, res) => {
         req.flash("status", 'green');
         req.flash("message", 'Register berhasil silahkan login');
         res.redirect("/login");
+
+
     }
     catch (error) {
         console.log(error.message);
@@ -59,10 +69,12 @@ export const register = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-    try {
+    try {    
+
         const { email, password } = req.body;
-        
+
         // validation
+        
         if(!email || !password){
             req.flash("status", 'red');
             req.flash("message", 'Data tidak boleh kosong');
@@ -103,6 +115,7 @@ export const logout = async (req, res) => {
     try {
         // validate
         const token = req.cookies["token"];
+    
 
         if(!token){
             res.redirect("/login");

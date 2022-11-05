@@ -102,7 +102,9 @@ export const storePost = async (req, res) => {
         const { title, slug, body, categoryId } = req.body;
         const userId= req.user.id;
 
-        if(!title || !slug || !body || !userId || !categoryId){
+        // validate 
+        const isNull = !title || !slug || !body || !userId || !categoryId;
+        if(isNull){
             req.flash("status", 'red');
             req.flash("message", 'Data tidak boleh kosong');
             return res.redirect("/post/create");
@@ -140,7 +142,7 @@ export const deletePost = async (req, res) => {
              
         }else{
             req.flash("status", 'red');
-            req.flash("message", 'Tidak bisa menghapus data post dengan id ' + id);
+            req.flash("message", `Tidak bisa menghapus post dengan id ${id}`);
         };
      
         res.redirect("/dashboard/post");
@@ -176,7 +178,10 @@ export const updatePost = async (req, res) => {
         const userId = req.user.id;
         const { title, slug, body, categoryId } = req.body;
 
-        if( !title || !slug || !body || !userId || !categoryId ) {
+        // validate 
+
+        const isNull = !title || !slug || !body || !userId || !categoryId;
+        if(isNull) {
           req.flash("status", 'red');
           req.flash("message", 'Data tidak boleh kosong');
           return res.redirect("/post/edit/" + id);
@@ -200,7 +205,7 @@ export const updatePost = async (req, res) => {
             req.flash("message", 'Data post berhasil diupdate');
         } else {
             req.flash("status", 'red');
-            req.flash("message", 'Tidak bisa mengupdate data post dengan id ' + id);
+            req.flash("message", `Tidak bisa mengupdate post dengan id ${id}`);
         }
 
         res.redirect("/dashboard/post");

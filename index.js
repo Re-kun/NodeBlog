@@ -20,26 +20,28 @@ import AuthRouter from "./routes/auth.route.js";
 
 const app = express();
 
+req.session.destroy
+
 // setup module
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser('secret'));
 app.use(session({
     secret: "secret",
     resave: false,
     saveUninitialized: false,
     cookie: {
         sameSite: true,
-        maxAge: 60000
+        maxAge: 1000 * 60 * 60 * 24
     }
 }
 ));
+app.use(cookieParser('secret'));
 app.use(flash());
 
-// db sync
+// db sync 
 try {
     await db.authenticate();
     // await Users.sync();
