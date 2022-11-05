@@ -1,11 +1,11 @@
 {
-    "root": true,
-
     "env": {
         "es2021": true,
-        "node": true
+        "node": true,
+        "es6": true
     },
-    "extends": ["eslint:recommended", "prettier"],
+    "extends": "eslint:recommended",
+
     "overrides": [
     ],
     "parserOptions": {
@@ -13,6 +13,7 @@
         "sourceType": "module"
     },
     "rules": {
-        "no-console" : "error"
+        "indent": ["error", 4],
+        "quotes": ["error", "single"]
     }
 }

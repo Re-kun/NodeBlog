@@ -23,7 +23,7 @@ export const indexPost = async (req, res) => {
     }
     catch (error){
         console.log(error.message);
-    };
+    }
 };
 
 export const detailPost = async (req, res) => {
@@ -31,9 +31,7 @@ export const detailPost = async (req, res) => {
         const id = req.params.id;
         const post = await Posts.findOne({ where: { id: id } });
 
-        !post ? res.redirect("/posts") : 
-        
-        res.render("blog/detail", {
+        !post ? res.redirect("/posts") : res.render("blog/detail", {
             post: post,
             username: req.user ? req.user.username : false,
             status: req.flash("status"),
@@ -42,7 +40,7 @@ export const detailPost = async (req, res) => {
     }
     catch (error) {
         console.log(error.message);
-    };
+    }
 };
 
 export const searchPost = async (req, res) => {
@@ -83,7 +81,7 @@ export const dashboardPost = async (req, res) => {
     }
     catch (error) {
         console.log(error.message);
-    };
+    }
 };
 
 // create
@@ -108,7 +106,7 @@ export const storePost = async (req, res) => {
             req.flash("status", 'red');
             req.flash("message", 'Data tidak boleh kosong');
             return res.redirect("/post/create");
-        };
+        }
         
         const post = {
             title: title,
@@ -127,7 +125,7 @@ export const storePost = async (req, res) => {
         req.flash("status", 'red');
         req.flash("message", error.message);
         res.redirect("/post/create");
-    };  
+    } 
 };
 
 // delete
@@ -143,7 +141,7 @@ export const deletePost = async (req, res) => {
         }else{
             req.flash("status", 'red');
             req.flash("message", `Tidak bisa menghapus post dengan id ${id}`);
-        };
+        }
      
         res.redirect("/dashboard/post");
     }   
@@ -169,7 +167,7 @@ export const editPost = async (req, res) => {
     }
     catch (error) {
         console.log(error.message);
-    };
+    }
 };
 
 export const updatePost = async (req, res) => {
@@ -185,7 +183,7 @@ export const updatePost = async (req, res) => {
           req.flash("status", 'red');
           req.flash("message", 'Data tidak boleh kosong');
           return res.redirect("/post/edit/" + id);
-        };
+        }
 
         const post = {
             title: title,
@@ -216,5 +214,5 @@ export const updatePost = async (req, res) => {
         req.flash("message", error.message);
         return res.redirect("/post/edit/" + req.params.id);
 
-    };
+    }
 };

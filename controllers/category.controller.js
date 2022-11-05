@@ -13,7 +13,7 @@ export const indexCategory = async (req, res) => {
     }
     catch (error) {
         console.log(error.message);
-    };
+    }
 };
 
 export const postCategory = async (req, res) => {
@@ -35,7 +35,7 @@ export const postCategory = async (req, res) => {
     }
     catch (error) {
         console.log(error.message);
-    };
+    }
 };
 
 // create
@@ -55,7 +55,7 @@ export const storeCategory = async (req, res) => {
             req.flash("status", 'red');
             req.flash("message", 'Data tidak boleh kosong');
             return res.redirect("/category/create");
-        };
+        }
 
         const newCategory = {
             name: name,
@@ -69,7 +69,7 @@ export const storeCategory = async (req, res) => {
     }
     catch (error) {
         console.log(error.message);
-    };
+    }
 };
 
 // update
@@ -87,7 +87,7 @@ export const editCategory = async (req, res) => {
     }
     catch (error) {
         console.log(error.message);
-    };
+    }
 };
 
 export const updateCategory = async (req, res) => {
