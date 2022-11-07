@@ -20,7 +20,7 @@
                       </div>
                     </div>
                   <% } %>	
-                  <form action="/post" method="post">
+                  <form action="/post" method="post" enctype="multipart/form-data">
 
                     <!-- title input -->
                     <div class="mb-6">
@@ -30,6 +30,15 @@
                         placeholder="title"
                         name="title"
                         
+                      />
+                    </div>
+                    <div class="mb-6">
+                      <input
+                        type="file"
+                        id="image"
+                        class="image block w-full px-4 py-2 m-0 text-xl font-normal border border-solid rounded form-control focus:text-slate-500 bg-slate-300 placeholder-slate-600 focus:outline-none"
+                        placeholder="image"
+                        name="image"
                       />
                     </div>
 

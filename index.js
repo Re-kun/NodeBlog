@@ -3,11 +3,14 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import flash from 'connect-flash';
-import path from 'path';
+
+
 //config express
+import path from 'path';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
 // models
 import db from './models/index.js';
 // import Users from './models/user.model.js';
@@ -18,8 +21,9 @@ import IndexRouter from './routes/index.route.js';
 import DashboardRouter from './routes/dashboard.route.js';
 import AuthRouter from './routes/auth.route.js';
 
-const app = express();
 
+// setup variabel module
+const app = express();
 
 // setup module
 app.set('views', path.join(__dirname, 'views'));
