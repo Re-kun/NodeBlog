@@ -13,6 +13,9 @@ const Posts = db.define("posts", {
     },
     body: {
         type: DataTypes.TEXT
+    },
+    Image: {
+        type: DataTypes.STRING
     }
 }, {
     freezeTableName: true

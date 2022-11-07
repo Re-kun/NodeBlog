@@ -1,19 +1,19 @@
-import Users from "../models/user.model.js";
-import Posts from "../models/post.model.js";
+import Users from '../models/user.model.js';
+import Posts from '../models/post.model.js';
 
 export const indexUser = async (req, res) => {
     try {
-       const users = await Users.findAll();
-       res.render("dashboard/user", {
+        const users = await Users.findAll();
+        res.render('dashboard/user', {
             data: users,
             username: req.user ? req.user.username : false,
-            status: req.flash("status"),
-            message: req.flash("message")
-       });
+            status: req.flash('status'),
+            message: req.flash('message')
+        });
     }   
     catch (error){
         console.log(error.message);
-    };
+    }
 };
 
 export const postUser = async (req, res) => {
@@ -25,25 +25,25 @@ export const postUser = async (req, res) => {
             include: { all: true }
         });
 
-        res.render("blog/index", {            
+        res.render('blog/index', {            
             posts: posts,
             username: req.user ? req.user.username : false,
-            status: req.flash("status"),
-            message: req.flash("message") 
+            status: req.flash('status'),
+            message: req.flash('message') 
         });
         
     }
     catch (error) {
         console.log(error.message);
-    };
+    }
 };
 
 // create
 export const createUser = (req, res) => {
-    res.render("user/user.create.ejs", {
+    res.render('user/user.create.ejs', {
         username: req.user ? req.user.username : false,
-         status: req.flash("status"),
-         message: req.flash("message")
+        status: req.flash('status'),
+        message: req.flash('message')
     });
 };
 
@@ -55,24 +55,24 @@ export const storeUser = async (req, res) => {
 
         const isNull = !username || !email || !password || !confirmPassword || !role; 
         if (isNull) {
-           req.flash("status", 'red');
-           req.flash("message", 'Data tidak boleh kosong');
-           return res.redirect("/user/create");
-        };
+            req.flash('status', 'red');
+            req.flash('message', 'Data tidak boleh kosong');
+            return res.redirect('/user/create');
+        }
 
         const user = await Users.findOne({ where: {email: email} });
 
         if (user) {
-           req.flash("status", 'red');
-           req.flash("message", 'Email sudah di pakai');
-           return res.redirect("/user/create");
+            req.flash('status', 'red');
+            req.flash('message', 'Email sudah di pakai');
+            return res.redirect('/user/create');
         }
 
         if(password !== confirmPassword) {
-            req.flash("status", 'red');
-            req.flash("message", 'Password tidak cocok');
-            return res.redirect("/user/create");
-        };
+            req.flash('status', 'red');
+            req.flash('message', 'Password tidak cocok');
+            return res.redirect('/user/create');
+        }
 
         const newUser = {
             username: username,
@@ -82,13 +82,13 @@ export const storeUser = async (req, res) => {
         };
 
         await Users.create(newUser);
-        req.flash("status", 'green');
-        req.flash("message", 'User berhasil di tambahkan');
-        res.redirect("/dashboard/user");
+        req.flash('status', 'green');
+        req.flash('message', 'User berhasil di tambahkan');
+        res.redirect('/dashboard/user');
     }
     catch (error) {
         console.log(error.message);
-    };
+    }
 };
 
 // update 
@@ -97,16 +97,16 @@ export const editUser = async (req, res) => {
         const id = req.params.id;
         const user = await Users.findOne({ where: {id: id}, attributes: ['id', 'username', 'email', 'role'] });
     
-        res.render("user/user.edit.ejs", {
+        res.render('user/user.edit.ejs', {
             data: user,
             username: req.user ? req.user.username : false,
-            status: req.flash("status"),
-            message: req.flash("message")
+            status: req.flash('status'),
+            message: req.flash('message')
         });
     }
     catch (error) {
         console.log(error.message);
-    };
+    }
 };
 
 export const updateUser = async (req, res) => {
@@ -118,10 +118,10 @@ export const updateUser = async (req, res) => {
         
         const isNull = !username || !email || !role;
         if(isNull) {
-            req.flash("status", 'red');
-            req.flash("message", 'Data tidak boleh kosong');
-            return res.redirect("/user/edit/" + id);
-        };
+            req.flash('status', 'red');
+            req.flash('message', 'Data tidak boleh kosong');
+            return res.redirect('/user/edit/' + id);
+        }
 
         const newUser = {
             username: username,
@@ -134,38 +134,38 @@ export const updateUser = async (req, res) => {
         });
 
         if(result == 1) {
-           req.flash("status", 'green');
-           req.flash("message", 'Data user berhasil diupdate');
+            req.flash('status', 'green');
+            req.flash('message', 'Data user berhasil diupdate');
         } else {
-            req.flash("status", 'red');
-            req.flash("message", `Tidak bisa mengupdate user dengan id ${id}`);
-        };
+            req.flash('status', 'red');
+            req.flash('message', `Tidak bisa mengupdate user dengan id ${id}`);
+        }
 
-        res.redirect("/dashboard/user");
+        res.redirect('/dashboard/user');
     }
     catch (error) {
         console.log(error.message);
-    };
+    }
 }
 
 // delete 
 export const deleteUser = async (req, res) => {
     try {
-         const id = req.params.id;
-         await Posts.destroy({ where: {userId: id} });
-         const result = await Users.destroy({ where: {id: id} });
+        const id = req.params.id;
+        await Posts.destroy({ where: {userId: id} });
+        const result = await Users.destroy({ where: {id: id} });
          
-         if (result == 1 ){
-             req.flash("status", 'green');
-             req.flash("message", 'User berhasil dihapus');
+        if (result == 1 ){
+            req.flash('status', 'green');
+            req.flash('message', 'User berhasil dihapus');
         } else {
-            req.flash("status", 'red');
-            req.flash("message", `Tidak bisa menghapus user dengan id ${id}`);
-        };
+            req.flash('status', 'red');
+            req.flash('message', `Tidak bisa menghapus user dengan id ${id}`);
+        }
 
-        res.redirect("/dashboard/user");
+        res.redirect('/dashboard/user');
     }
     catch (error) {
         console.log(error.message);
-    };
+    }
 };
