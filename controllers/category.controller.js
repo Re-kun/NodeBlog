@@ -1,14 +1,14 @@
-import Categories from '../models/category.model.js';
-import Posts from '../models/post.model.js';
+import Categories from "../models/category.model.js";
+import Posts from "../models/post.model.js";
 
 export const indexCategory = async (req, res) => {
     try {
-        const categories = await Categories.findAll({ attributes: [ 'id', 'name', 'slug'] });
-        res.render('dashboard/category', {
+        const categories = await Categories.findAll({ attributes: [ "id", "name", "slug"] });
+        res.render("dashboard/category", {
             data: categories,
             username: req.user ? req.user.username : false,
-            status: req.flash('status'),
-            message: req.flash('message')
+            status: req.flash("status"),
+            message: req.flash("message")
         });
     }
     catch (error) {
@@ -25,11 +25,11 @@ export const postCategory = async (req, res) => {
             include: { all: true }
         });
 
-        res.render('blog/index', {
+        res.render("blog/index", {
             posts: posts,
             username: req.user ? req.user.username : false,
-            status: req.flash('status'),
-            message: req.flash('message')
+            status: req.flash("status"),
+            message: req.flash("message")
         });
         
     }
@@ -40,10 +40,10 @@ export const postCategory = async (req, res) => {
 
 // create
 export const createCategory = (req, res) => {
-    res.render('category/category.create.ejs', {
+    res.render("category/category.create.ejs", {
         username: req.user ? req.user.username : false,
-        status: req.flash('status'),
-        message: req.flash('message')
+        status: req.flash("status"),
+        message: req.flash("message")
     });
 };
 
@@ -52,9 +52,9 @@ export const storeCategory = async (req, res) => {
         const { name, slug } = req.body;
 
         if(!name || !slug){
-            req.flash('status', 'red');
-            req.flash('message', 'Data tidak boleh kosong');
-            return res.redirect('/category/create');
+            req.flash("status", "red");
+            req.flash("message", "Data tidak boleh kosong");
+            return res.redirect("/category/create");
         }
 
         const newCategory = {
@@ -63,9 +63,9 @@ export const storeCategory = async (req, res) => {
         };
 
         await Categories.create(newCategory);
-        req.flash('status', 'green');
-        req.flash('message', 'Category berhasil di tambahkan');
-        res.redirect('/dashboard/category');
+        req.flash("status", "green");
+        req.flash("message", "Category berhasil di tambahkan");
+        res.redirect("/dashboard/category");
     }
     catch (error) {
         console.log(error.message);
@@ -78,11 +78,11 @@ export const editCategory = async (req, res) => {
         const id = req.params.id;
         const category = await Categories.findOne({ where: {id: id} });
         
-        res.render('category/category.edit.ejs', {
+        res.render("category/category.edit.ejs", {
             data: category,
             username: req.user ? req.user.username : false,
-            status: req.flash('status'),
-            message: req.flash('message')
+            status: req.flash("status"),
+            message: req.flash("message")
         });
     }
     catch (error) {
@@ -96,9 +96,9 @@ export const updateCategory = async (req, res) => {
         const { name, slug } = req.body;
 
         if( !name || !slug ) {
-            req.flash('status', 'red');
-            req.flash('message', 'Data tidak boleh kosong');
-            return res.redirect('/category/edit/' + id);
+            req.flash("status", "red");
+            req.flash("message", "Data tidak boleh kosong");
+            return res.redirect("/category/edit/" + id);
         }
 
         const newData = {
@@ -111,15 +111,15 @@ export const updateCategory = async (req, res) => {
         });
 
         if(result == 1) {
-            console.log('berhasil');
-            req.flash('status', 'green');
-            req.flash('message', 'Data category berhasil di update');
+            console.log("berhasil");
+            req.flash("status", "green");
+            req.flash("message", "Data category berhasil di update");
         } else {
-            req.flash('status', 'red');
-            req.flash('message', `Tidak bisa mengupdate category dengan id ${id}`);
+            req.flash("status", "red");
+            req.flash("message", `Tidak bisa mengupdate category dengan id ${id}`);
         }
         
-        res.redirect('/dashboard/category');
+        res.redirect("/dashboard/category");
     }
     catch (error) {
         console.log(error.message);
@@ -133,14 +133,14 @@ export const deleteCategory = async (req, res) => {
         const result = await Categories.destroy({ where: {id: id} });
 
         if(result == 1){
-            req.flash('status', 'green');
-            req.flash('message', 'Category berhasil dihapus');
+            req.flash("status", "green");
+            req.flash("message", "Category berhasil dihapus");
         } else {
-            req.flash('status', 'red');
-            req.flash('message', `Tidak bisa menghapus category dengan id ${id}`);
+            req.flash("status", "red");
+            req.flash("message", `Tidak bisa menghapus category dengan id ${id}`);
         }
 
-        res.redirect('/dashboard/category');
+        res.redirect("/dashboard/category");
     }
     catch (error) {
         console.log(error.message);
