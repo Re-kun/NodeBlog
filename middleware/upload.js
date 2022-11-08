@@ -1,6 +1,6 @@
 import multer from "multer";
 import crypto from "crypto";
-import moment from 'moment-timezone';
+import moment from "moment-timezone";
 
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -8,7 +8,7 @@ const fileStorage = multer.diskStorage({
     },
     filename: (req, file, cb) => {
         const ekstension = file.originalname.split(".")[1];
-        const filename = moment().format("YYYYMMDD") + "-" + crypto.randomBytes(7).toString("hex") + "." + ekstension;
+        const filename = moment().format("YYYYMMDD") + "-" + crypto.randomBytes(5).toString("hex") + "." + ekstension;
         cb(null, filename);
     }
 })
