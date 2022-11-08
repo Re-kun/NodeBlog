@@ -1,15 +1,15 @@
 import multer from "multer";
-// import crypto from "crypto";
+import crypto from "crypto";
 
 
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, "./image");
+        cb(null, "./public/image");
     },
     filename: (req, file, cb) => {
-        // const token = crypto.randomBytes(10).toString("hex");
-
-        cb(null, new Date().toDateString() + "-" + file.originalname);
+        const ekstension = file.originalname.split(".")[1];
+        const filename = new Date().toDateString() + "-" + crypto.randomBytes(7).toString("hex") + "." + ekstension;
+        cb(null, filename);
     }
 })
 

@@ -88,7 +88,8 @@ export const login = async (req, res) => {
             return res.redirect("/login");
         }
 
-        if (user.password !== password) {
+        const correctPassword = await bcyrpt.compare(password, user.password)
+        if (!correctPassword) {
             req.flash("status", "red");
             req.flash("message", "Password salah");
             return res.redirect("/login");
