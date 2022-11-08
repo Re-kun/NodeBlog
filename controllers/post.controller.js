@@ -1,23 +1,23 @@
-import Posts from '../models/post.model.js';
-import Categories from '../models/category.model.js';
+import Posts from "../models/post.model.js";
+import Categories from "../models/category.model.js";
 
 // get
 export const indexPost = async (req, res) => {
     try{
         const posts = await Posts.findAll({ 
             attributes: [
-                'id', 'title', 'slug', 'body'
+                "id", "title", "slug", "body"
             ],
             include: {
                 all: true,
             }  
         });
         
-        res.render('blog/index', {
+        res.render("blog/index", {
             posts: posts,
             username: req.user ? req.user.username : false,
-            status: req.flash('status'),
-            message: req.flash('message')
+            status: req.flash("status"),
+            message: req.flash("message")
         });
 
     }
@@ -31,11 +31,11 @@ export const detailPost = async (req, res) => {
         const id = req.params.id;
         const post = await Posts.findOne({ where: { id: id } });
 
-        !post ? res.redirect('/posts') : res.render('blog/detail', {
+        !post ? res.redirect("/posts") : res.render("blog/detail", {
             post: post,
             username: req.user ? req.user.username : false,
-            status: req.flash('status'),
-            message: req.flash('message')
+            status: req.flash("status"),
+            message: req.flash("message")
         });
     }
     catch (error) {
@@ -46,18 +46,18 @@ export const detailPost = async (req, res) => {
 export const searchPost = async (req, res) => {
     try {
         if(!req.query.title){
-            return res.redirect('/posts');
+            return res.redirect("/posts");
         }
 
         const posts = await Posts.findAll({ 
             where: {title:  req.query.title }, 
             include: { all: true },
             attributes: [
-                'id', 'title'
+                "id", "title"
             ] 
         });
         
-        res.render('blog/index', {
+        res.render("blog/index", {
             posts: posts,
             username: req.user ? req.user.username : false
         });
@@ -70,13 +70,13 @@ export const searchPost = async (req, res) => {
 export const dashboardPost = async (req, res) => {
     try {
         const userId= req.user.id;
-        const posts = await Posts.findAll({ where: { userId : userId } ,attributes: ['id', 'title'] });
+        const posts = await Posts.findAll({ where: { userId : userId } ,attributes: ["id", "title"] });
 
-        res.render('dashboard/post', {
+        res.render("dashboard/post", {
             data: posts,
             username: req.user ? req.user.username : false,
-            status: req.flash('status'),
-            message: req.flash('message')
+            status: req.flash("status"),
+            message: req.flash("message")
         });
     }
     catch (error) {
@@ -86,12 +86,13 @@ export const dashboardPost = async (req, res) => {
 
 // create
 export const createPost = async (req, res) => {
+
     const categories = await Categories.findAll();
-    res.render('blog/post.create.ejs', {
+    res.render("blog/post.create.ejs", {
         categories: categories,
         username: req.user ? req.user.username : false,
-        status: req.flash('status'),
-        message: req.flash('message')
+        status: req.flash("status"),
+        message: req.flash("message")
     });
 };
 
@@ -125,9 +126,9 @@ export const storePost = async (req, res) => {
         // res.redirect('/dashboard/post');
     }
     catch (error){
-        req.flash('status', 'red');
-        req.flash('message', error.message);
-        res.redirect('/post/create');
+        req.flash("status", "red");
+        req.flash("message", error.message);
+        res.redirect("/post/create");
     } 
 };
 
@@ -138,15 +139,15 @@ export const deletePost = async (req, res) => {
         const result = await Posts.destroy({ where: {id: id }});
 
         if( result == 1) {
-            req.flash('status', 'green');
-            req.flash('message', 'Data post berhasil dihapus');
+            req.flash("status", "green");
+            req.flash("message", "Data post berhasil dihapus");
              
         }else{
-            req.flash('status', 'red');
-            req.flash('message', `Tidak bisa menghapus post dengan id ${id}`);
+            req.flash("status", "red");
+            req.flash("message", `Tidak bisa menghapus post dengan id ${id}`);
         }
      
-        res.redirect('/dashboard/post');
+        res.redirect("/dashboard/post");
     }   
     catch (error) {
         console.log(error.message);
@@ -157,15 +158,15 @@ export const deletePost = async (req, res) => {
 export const editPost = async (req, res) => {
     try{
         const id = req.params.id;
-        const post = await Posts.findOne({ where: {id: id}, attributes: ['id', 'title', 'slug', 'body', 'userId', 'categoryId'] });
+        const post = await Posts.findOne({ where: {id: id}, attributes: ["id", "title", "slug", "body", "userId", "categoryId"] });
         const categories = await Categories.findAll();
     
-        res.render('blog/post.edit.ejs', {
+        res.render("blog/post.edit.ejs", {
             categories: categories,
             data: post,
             username: req.user ? req.user.username : false,
-            status: req.flash('status'),
-            message: req.flash('message')
+            status: req.flash("status"),
+            message: req.flash("message")
         });
     }
     catch (error) {
@@ -183,9 +184,9 @@ export const updatePost = async (req, res) => {
 
         const isNull = !title || !slug || !body || !userId || !categoryId;
         if(isNull) {
-            req.flash('status', 'red');
-            req.flash('message', 'Data tidak boleh kosong');
-            return res.redirect('/post/edit/' + id);
+            req.flash("status", "red");
+            req.flash("message", "Data tidak boleh kosong");
+            return res.redirect("/post/edit/" + id);
         }
 
         const post = {
@@ -202,20 +203,20 @@ export const updatePost = async (req, res) => {
 
 
         if( result == 1) {
-            req.flash('status', 'green');
-            req.flash('message', 'Data post berhasil diupdate');
+            req.flash("status", "green");
+            req.flash("message", "Data post berhasil diupdate");
         } else {
-            req.flash('status', 'red');
-            req.flash('message', `Tidak bisa mengupdate post dengan id ${id}`);
+            req.flash("status", "red");
+            req.flash("message", `Tidak bisa mengupdate post dengan id ${id}`);
         }
 
-        res.redirect('/dashboard/post');
+        res.redirect("/dashboard/post");
        
     }
     catch (error) {
-        req.flash('status', 'red');
-        req.flash('message', error.message);
-        return res.redirect('/post/edit/' + req.params.id);
+        req.flash("status", "red");
+        req.flash("message", error.message);
+        return res.redirect("/post/edit/" + req.params.id);
 
     }
 };
