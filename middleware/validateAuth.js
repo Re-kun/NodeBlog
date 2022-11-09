@@ -1,7 +1,14 @@
-export const validateAuth = (req, res, next) => {
-    const token = req.cookies["token"];
-    token ? res.redirect("/") : next();  
+import Users from "../models/user.model.js";
 
-    // console.log(req.session.ikan)
-    // next()
+export const validateAuth = async (req, res, next) => {
+    const isAuth = req.session.auth;
+    
+    if (isAuth){
+        const user = await Users.findOne({ where: {id: isAuth} });
+        req.user = user 
+        next()   
+    }else{
+        res.redirect("/login")
+    }
+    
 };

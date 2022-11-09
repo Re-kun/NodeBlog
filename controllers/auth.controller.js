@@ -1,6 +1,5 @@
 import Users from "../models/user.model.js";
 import bcyrpt from "bcrypt";
-import crypto from "crypto";
 
 export const signIn = (req, res) => {
     res.render("auth/login",{
@@ -95,16 +94,10 @@ export const login = async (req, res) => {
             return res.redirect("/login");
         }
 
-        // generate token
-        const token = crypto.randomBytes(30).toString("hex");
-        
-        await Users.update({
-            token: token
-        }, {
-            where: {id: user.id}
-        });
+        //Create session
+        req.session.auth = user.id;
+        req.session.save()
 
-        res.cookie("token", token);
         res.redirect("/");
     }
     catch (error) {
@@ -114,17 +107,7 @@ export const login = async (req, res) => {
 
 export const logout = async (req, res) => {
     try {
-        // validate
-        const token = req.cookies["token"];
-    
-
-        if(!token){
-            res.redirect("/login");
-        }
-
-        res.clearCookie("token");
-        req.flash("status", "green");
-        req.flash("message", "Logout berhasil");
+        req.session.destroy();
         res.redirect("login");
     }
     catch (error) {
