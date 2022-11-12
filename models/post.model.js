@@ -17,7 +17,7 @@ const Posts = db.define("posts", {
     body: {
         type: DataTypes.TEXT
     },
-    Image: {
+    image: {
         type: DataTypes.STRING
     }
 }, {

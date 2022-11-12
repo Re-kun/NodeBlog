@@ -99,31 +99,31 @@ export const createPost = async (req, res) => {
 export const storePost = async (req, res) => {
     try{
 
-        console.log(req.file);
-        console.log(req.body);
-        // const { title, slug, body, categoryId } = req.body;
-        // const userId= req.user.id;
+        const { title, slug, excerpt, body, categoryId } = req.body;
+        const image = req.file.filename;
+        const userId= req.user.id;
 
         // validate 
-        // const isNull = !title || !slug || !body || !userId || !categoryId;
-        // if(isNull){
-        //     req.flash('status', 'red');
-        //     req.flash('message', 'Data tidak boleh kosong');
-        //     return res.redirect('/post/create');
-        // }
+        const isNull = !title || !slug || !excerpt || !body || !userId || !categoryId || !image;
+        if(isNull){
+            req.flash("status", "red");
+            req.flash("message", "Data tidak boleh kosong");
+            return res.redirect("/post/create");
+        }
         
-        // const post = {
-        //     title: title,
-        //     slug: slug,
-        //     body: body,
-        //     userId: userId,
-        //     categoryId: categoryId
-        // };
+        const post = {
+            title: title,
+            slug: slug,
+            body: body,
+            userId: userId,
+            categoryId: categoryId,
+            image: image
+        };
 
-        // await Posts.create(post);
-        // req.flash('status', 'green');
-        // req.flash('message', 'Post berhasil dibuat');
-        // res.redirect('/dashboard/post');
+        await Posts.create(post);
+        req.flash("status", "green");
+        req.flash("message", "Post berhasil dibuat");
+        res.redirect("/dashboard/post");
     }
     catch (error){
         req.flash("status", "red");
