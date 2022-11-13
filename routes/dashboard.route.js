@@ -21,7 +21,7 @@ router.post("/user/delete/:id", validateAuth, deleteUser);
 
 router.get("/dashboard/post", validateAuth, dashboardPost);
 router.get("/post/create", validateAuth, upload, createPost);
-router.get("/post/edit/:id", validateAuth, editPost);
+router.get("/post/edit/:id", validateAuth, upload, editPost);
 router.post("/post/update/:id", validateAuth, upload, updatePost);
 router.post("/post", validateAuth, upload, storePost);
 router.post("/post/delete/:id", validateAuth, deletePost);

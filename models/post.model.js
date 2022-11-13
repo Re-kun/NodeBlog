@@ -11,9 +11,6 @@ const Posts = db.define("posts", {
     slug: {
         type: DataTypes.STRING
     },
-    excerpt: {
-        type: DataTypes.STRING
-    },
     body: {
         type: DataTypes.TEXT
     },

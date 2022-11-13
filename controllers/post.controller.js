@@ -179,6 +179,7 @@ export const updatePost = async (req, res) => {
         const id = req.params.id;
         const userId = req.user.id;
         const { title, slug, body, categoryId } = req.body;
+        let image = req.file;
 
         // validate 
 
@@ -189,10 +190,12 @@ export const updatePost = async (req, res) => {
             return res.redirect("/post/edit/" + id);
         }
 
+        image ? image = image.filename : image
         const post = {
             title: title,
             slug: slug,
             body: body,
+            image:image,
             userId: userId,
             categoryId: categoryId
         };
@@ -200,7 +203,6 @@ export const updatePost = async (req, res) => {
         const result = await Posts.update(post, {
             where: { id: id } 
         });
-
 
         if( result == 1) {
             req.flash("status", "green");

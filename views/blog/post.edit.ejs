@@ -20,7 +20,7 @@
                       </div>
                     </div>
                   <% } %>	
-                  <form  action="/post/update/<%= data.id %>" method="post">
+                  <form  action="/post/update/<%= data.id %>" method="post" enctype="multipart/form-data">
 
                     <input type="hidden" name="_method" value="PUT">
                     <!-- title input -->
@@ -35,6 +35,15 @@
                       />
                     </div>
 
+                    <div class="mb-6">
+                      <input
+                        type="file"
+                        id="image"
+                        class="image block w-full px-4 py-2 m-0 text-xl font-normal border border-solid rounded form-control focus:text-slate-500 bg-slate-300 placeholder-slate-600 focus:outline-none"
+                        placeholder="image"
+                        name="image"
+                        />
+                    </div>
      
                     <!-- category -->
                     <div class="mb-2">
