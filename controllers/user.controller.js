@@ -49,11 +49,11 @@ export const createUser = (req, res) => {
 
 export const storeUser = async (req, res) => {
     try {
-        const { username, email,  password, confirmPassword, role } = req.body;
+        const { username, email,  password, confirmPassword } = req.body;
         
         //validate
 
-        const isNull = !username || !email || !password || !confirmPassword || !role; 
+        const isNull = !username || !email || !password || !confirmPassword ;
         if (isNull) {
             req.flash("status", "red");
             req.flash("message", "Data tidak boleh kosong");
@@ -77,8 +77,7 @@ export const storeUser = async (req, res) => {
         const newUser = {
             username: username,
             email: email,
-            password: password,
-            role: "user"
+            password: password
         };
 
         await Users.create(newUser);
@@ -95,7 +94,7 @@ export const storeUser = async (req, res) => {
 export const editUser = async (req, res) => {
     try {
         const id = req.params.id;
-        const user = await Users.findOne({ where: {id: id}, attributes: ["id", "username", "email", "role"] });
+        const user = await Users.findOne({ where: {id: id}, attributes: ["id", "username", "email"] });
     
         res.render("user/user.edit.ejs", {
             data: user,
@@ -112,11 +111,11 @@ export const editUser = async (req, res) => {
 export const updateUser = async (req, res) => {
     try {   
         const id = req.params.id;
-        const { username, email, role } = req.body;
+        const { username, email } = req.body;
 
         // validate
         
-        const isNull = !username || !email || !role;
+        const isNull = !username || !email;
         if(isNull) {
             req.flash("status", "red");
             req.flash("message", "Data tidak boleh kosong");
@@ -126,7 +125,6 @@ export const updateUser = async (req, res) => {
         const newUser = {
             username: username,
             email: email,
-            role: role
         };
 
         const result = await Users.update(newUser,{

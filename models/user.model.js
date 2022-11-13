@@ -14,10 +14,6 @@ const Users = db.define("users", {
     password : {
         type: DataTypes.STRING,
         allowNull: false
-    },
-    role : {
-        type: DataTypes.STRING,
-        allowNull: false
     }
 },{
     freezeTableName: true
