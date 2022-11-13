@@ -29,7 +29,6 @@
 				<table class="w-full table-fixed ">
 					<thead class="bg-[#c2c2c2] text-[#5c5c5c] md:table-header-group hidden">
 					  <tr>
-						<th class="px-3 py-2 text-left w-60">Name</th>
 						<th class="px-3 py-2 text-left w-60">Username</th>
 						<th class="px-3 py-2 text-left w-60">Update</th>
 						<th class="px-3 py-2 text-left w-60">Delete</th>
@@ -41,7 +40,6 @@
 
 					  <tr class="md:table-row flex flex-col md:border-b md:border-[#4e4e4e] ">
 						<td class="px-3 py-3 text-left border-b border-[#4e4e4e] "><%= data[i].username %></td>
-						<td class="px-3 py-3 text-left border-b border-[#4e4e4e]">Admin</td>
 						<td class="px-3 py-3 border-b border-[#4e4e4e]"><a href="/user/edit/<%= data[i].id %>" class="px-3 py-1 text-blue-500 border border-blue-500 rounded-lg hover:text-white hover:bg-blue-500">Update</a></td>
 						<td class="px-3 py-5 border-b border-[#4e4e4e]">
 							<form action="/user/delete/<%= data[i].id %>" method="post">

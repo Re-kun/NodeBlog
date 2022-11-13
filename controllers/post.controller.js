@@ -99,12 +99,12 @@ export const createPost = async (req, res) => {
 export const storePost = async (req, res) => {
     try{
 
-        const { title, slug, excerpt, body, categoryId } = req.body;
-        const image = req.file.filename;
+        const { title, slug, body, categoryId } = req.body;
+        const image = req.file;
         const userId= req.user.id;
 
         // validate 
-        const isNull = !title || !slug || !excerpt || !body || !userId || !categoryId || !image;
+        const isNull = !title || !slug || !body || !userId || !categoryId || !image;
         if(isNull){
             req.flash("status", "red");
             req.flash("message", "Data tidak boleh kosong");
@@ -117,7 +117,7 @@ export const storePost = async (req, res) => {
             body: body,
             userId: userId,
             categoryId: categoryId,
-            image: image
+            image: image.filename
         };
 
         await Posts.create(post);

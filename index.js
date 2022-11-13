@@ -64,6 +64,10 @@ app.get("/", (req, res) => {
     res.render("index");
 });
 
+app.get("*", (req, res) => {
+    res.render("404");
+})
+
 // Starting server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

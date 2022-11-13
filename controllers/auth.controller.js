@@ -3,6 +3,9 @@ import bcyrpt from "bcrypt";
 import Cryptr from "cryptr";
 
 export const signIn = (req, res) => {
+    const isAuth = req.session.auth || req.cookies["auth"]; 
+    if(isAuth){return res.redirect("/");}
+
     res.render("auth/login",{
         status: req.flash("status"),
         message: req.flash("message")
@@ -10,6 +13,9 @@ export const signIn = (req, res) => {
 };
 
 export const signUp = (req, res) => {
+    const isAuth = req.session.auth || req.cookies["auth"]; 
+    if(isAuth){return res.redirect("/");}
+
     res.render("auth/register", {
         status: req.flash("status"),
         message: req.flash("message")
@@ -18,7 +24,9 @@ export const signUp = (req, res) => {
 
 export const register = async (req, res) => {
     try {
-    
+        const isAuth = req.session.auth || req.cookies["auth"]; 
+        if(isAuth){return res.redirect("/");}
+
         const { username, email, password, confirmPassword } = req.body;
         
         // validation
@@ -69,6 +77,8 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
     try {    
+        const isAuth = req.session.auth || req.cookies["auth"]; 
+        if(isAuth){return res.redirect("/");}
 
         const { email, password, remember } = req.body;
 
@@ -113,6 +123,7 @@ export const login = async (req, res) => {
 export const logout = async (req, res) => {
     try {
         req.session.destroy();
+        res.clearCookie("auth");
         res.redirect("login");
     }
     catch (error) {
