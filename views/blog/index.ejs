@@ -17,10 +17,11 @@
 			<div class="grid gap-2 xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 ">
 
 				<% for(let i = 0; i < posts.length; i++) {%>
-				<div class="w-[95%] md:mx-auto sm:mx-36">
+
+					<div class="w-[95%] md:mx-auto sm:mx-36">
 					<div class="max-w-sm mb-5 rounded-lg ">
 						<div>
-							<img class="object-cover h-48 rounded-lg w-96" src="/img/art-design-4.jpg" alt="">
+							<img class="object-cover h-48 rounded-lg w-96" src="/image/<%= posts[i].image %>" alt="">
 						</div>
 						<div class="p-5 mt-3 bg-white border border-gray-200 shadow-md">
 							<div class="grid grid-cols-4 gap-4 mb-2">

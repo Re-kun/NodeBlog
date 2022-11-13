@@ -6,7 +6,7 @@ export const indexPost = async (req, res) => {
     try{
         const posts = await Posts.findAll({ 
             attributes: [
-                "id", "title", "slug", "body"
+                "id", "title", "slug", "body", "image"
             ],
             include: {
                 all: true,

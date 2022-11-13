@@ -1,5 +1,6 @@
 import Users from "../models/user.model.js";
 import bcyrpt from "bcrypt";
+import Cryptr from "cryptr";
 
 export const signIn = (req, res) => {
     res.render("auth/login",{
@@ -70,7 +71,7 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
     try {    
 
-        const { email, password } = req.body;
+        const { email, password, remember } = req.body;
 
         // validation
         
@@ -79,7 +80,6 @@ export const login = async (req, res) => {
             req.flash("message", "Data tidak boleh kosong");
             return res.redirect("/login");
         }
-        
         const user = await Users.findOne({ where: {email:email} });
         if (!user) {
             req.flash("status", "red");
@@ -94,9 +94,15 @@ export const login = async (req, res) => {
             return res.redirect("/login");
         }
 
-        //Create session
-        req.session.auth = user.id;
-        req.session.save()
+        if(remember){
+            const cryptr = new Cryptr("myTotallySecretKey");
+            const encryptEmail = cryptr.encrypt(email);
+            res.cookie("auth", encryptEmail);
+        }else {
+            //Create session
+            req.session.auth = user.id;
+            req.session.save();
+        }
 
         res.redirect("/");
     }
